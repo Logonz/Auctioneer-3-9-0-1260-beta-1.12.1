@@ -311,8 +311,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.Database]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.Database]"..message);
 end
 
 --=============================================================================

@@ -226,7 +226,7 @@ function setAuctionDuration(duration, persist)
 	elseif (duration == 1440) then
 		durationIndex = 3
 	else
-		debugPrint("setAuctionDuration(): invalid duration ", duration)
+		debugPrint("setAuctionDuration(): invalid duration "..duration)
 		return
 	end
 
@@ -307,8 +307,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.AuctionsTab]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.AuctionsTab]"..message);
 end
 
 --=============================================================================

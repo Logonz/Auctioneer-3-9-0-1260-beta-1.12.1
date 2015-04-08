@@ -168,7 +168,7 @@ function setKhaosSetKeyValue(key, value) --Local
 		elseif (kKey.value ~= nil) then
 			Khaos.setSetKeyParameter("Auctioneer", key, "value", value)
 		else
-			debugPrint("setKhaosSetKeyValue(): don't know how to update key ", key)
+			debugPrint("setKhaosSetKeyValue(): don't know how to update key "..key)
 		end
 	end
 end
@@ -2074,8 +2074,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.Command]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.Command]"..message);
 end
 
 --=============================================================================

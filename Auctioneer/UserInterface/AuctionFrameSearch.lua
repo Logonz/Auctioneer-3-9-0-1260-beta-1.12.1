@@ -1429,8 +1429,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.SearchTab]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.SearchTab]"..message);
 end
 
 --=============================================================================

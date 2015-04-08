@@ -39,8 +39,8 @@ local queryForItemByName;
 local debugPrint;
 
 
-local function nextButton(...)
-	if (IsModifierKeyDown()) then
+local function nextButton()--Just removed ...
+	if (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown()) then
 		local numBatchAuctions, totalAuctions = GetNumAuctionItems("list");
 		local curPage = AuctionFrameBrowse.page
 		local pages = totalAuctions / NUM_AUCTION_ITEMS_PER_PAGE
@@ -53,11 +53,11 @@ local function nextButton(...)
 			AuctionFrameBrowse.page = math.min(pages - 1, AuctionFrameBrowse.page + 4)
 		end
 	end
-	return nextButtonHook(...)
+	return nextButtonHook()--Just removed ...
 end
 
-local function prevButton(...)
-	if (IsModifierKeyDown()) then
+local function prevButton()--Just removed ...
+	if (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown()) then
 		local curPage = AuctionFrameBrowse.page
 		if (IsControlKeyDown()) then
 			-- Jump back to the start
@@ -68,7 +68,7 @@ local function prevButton(...)
 			AuctionFrameBrowse.page = math.min(1, AuctionFrameBrowse.page - 4)
 		end
 	end
-	return prevButtonHook(...)
+	return prevButtonHook()--Just removed ...
 end
 
 -------------------------------------------------------------------------------
@@ -217,8 +217,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.BrowseTab]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.BrowseTab]"..message);
 end
 
 --=============================================================================

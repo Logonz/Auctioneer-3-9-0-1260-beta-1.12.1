@@ -192,7 +192,7 @@ function loadDatabase()
 	-- Upgrade each realm-faction database (if needed).
 	for ahKey in pairs(AuctioneerHistoryDB) do
 		if (not upgradeAHDatabase(AuctioneerHistoryDB[ahKey], CURRENT_HISTORYDB_VERSION)) then
-			debugPrint("WARNING: History database corrupted for", ahKey, "! Creating new database.");
+			debugPrint("WARNING: History database corrupted for "..ahKey.."! Creating new database.");
 			AuctioneerHistoryDB[ahKey] = createAHDatabase(ahKey);
 		end
 	end
@@ -267,7 +267,7 @@ function upgradeAHDatabase(ah, version)
 	end
 
 	-- Future DB upgrade code goes here...
-	debugPrint("Upgrading history database for", ah.ahKey, "to version", version);
+	debugPrint("Upgrading history database for "..ah.ahKey.." to version "..version);
 
 	-- Return the result of the upgrade!
 	return (ah.version == version);
@@ -300,11 +300,11 @@ function clear(itemKey, ahKey)
 			-- Remove the specified item from the database.
 			ah.totals[itemKey] = nil;
 			ah.buyoutPrices[itemKey] = nil;
-			debugPrint("Removed", itemKey, "from history database", ah.ahKey);
+			debugPrint("Removed "..itemKey.." from history database "..ah.ahKey);
 		else
 			-- Toss the entire database by recreating it.
 			LoadedHistoryDB[ah.ahKey] = createAHDatabase(ah.ahKey);
-			debugPrint("Cleared history database for", ah.ahKey);
+			debugPrint("Cleared history database for "..ah.ahKey);
 		end
 
 		-- Clear any cached values.
@@ -550,8 +550,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.HistoryDB]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.HistoryDB]"..message);
 end
 
 --=============================================================================

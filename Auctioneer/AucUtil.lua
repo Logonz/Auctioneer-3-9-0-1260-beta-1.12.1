@@ -123,7 +123,7 @@ function checkConstantsLimit() --%TODO%: Localize
 	return EnhTooltip.DebugPrint(debugprofilestop())
 end
 
-function getNumConstants(...)
+function getNumConstants(arg1,arg2,arg3,arg4,arg5) --BUG
 	local constantsTable = {}
 	local recursedTables = {}
 	local lastIndex = select("#", ...);
@@ -585,8 +585,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.Util]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.Util]"..message);
 end
 
 --=============================================================================

@@ -253,14 +253,14 @@ function setKhaosSetKeyValue(key, value)
 		local kKey = Khaos.getSetKey("Auctioneer", key)
 
 		if (not kKey) then
-			EnhTooltip.DebugPrint("setKhaosSetKeyParameter(): key", key, "does not exist")
+			EnhTooltip.DebugPrint("setKhaosSetKeyParameter(): key"..key.."does not exist")
 		elseif (kKey.checked) then
 			if (type(value) == "string") then value = (value == "on"); end
 			Khaos.setSetKeyParameter("Auctioneer", key, "checked", value)
 		elseif (kKey.value) then
 			Khaos.setSetKeyParameter("Auctioneer", key, "value", value)
 		else
-			EnhTooltip.DebugPrint("setKhaosSetKeyValue(): don't know how to update key", key)
+			EnhTooltip.DebugPrint("setKhaosSetKeyValue(): don't know how to update key"..key)
 		end
 	end
 end
@@ -399,8 +399,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.AskPrice]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.AskPrice]"..message);
 end
 
 --=============================================================================

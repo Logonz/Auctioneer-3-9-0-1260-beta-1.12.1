@@ -35,7 +35,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 				self:RegisterEvent("ADDON_LOADED")
 			</OnLoad>
 			<OnEvent>
-				if (event == "ADDON_LOADED" and select(1, ...):lower() == "auctioneer") then
+				if (event == "ADDON_LOADED" and arg1:lower() == "auctioneer") then
 					EnhTooltip.DebugPrint("Auctioneer ADDDON_LOADED Fired!")
 					Auctioneer.Core.AddOnLoaded()
 					self:UnregisterEvent("ADDON_LOADED")

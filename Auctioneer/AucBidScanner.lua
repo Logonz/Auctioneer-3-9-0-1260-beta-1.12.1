@@ -292,7 +292,7 @@ end
 function placeBid(request)
 	-- Iterate through each item on the page, searching for a match
 	local lastIndexOnPage, totalAuctions = GetNumAuctionItems("list");
-	debugPrint("Processing page", request.currentPage, "starting at index", request.currentIndex, "(", lastIndexOnPage, "on page;", totalAuctions, "in total)");
+	debugPrint("Processing page "..request.currentPage.." starting at index "..request.currentIndex.." (", lastIndexOnPage.." on page; "..totalAuctions.." in total)");
 	for indexOnPage = request.currentIndex, lastIndexOnPage do
 		local auction = Auctioneer.QueryManager.GetAuctionByIndex("list", indexOnPage);
 		if (Auctioneer.QueryManager.IsAuctionValid(auction)) then
@@ -312,7 +312,7 @@ function placeBid(request)
 					-- can be received during the call to PlaceAuctionBid.
 					local itemKey = Auctioneer.ItemDB.CreateItemKeyFromAuction(auction);
 					local name = Auctioneer.ItemDB.GetItemName(itemKey);
-					debugPrint("Placing bid on", name, "at", bidAmount, "(index ", indexOnPage, ")");
+					debugPrint("Placing bid on "..name, " at "..bidAmount.."(index "..indexOnPage, ")");
 					Auctioneer.BidManager.PlaceAuctionBid("list", indexOnPage, bidAmount, bidCompleteCallback);
 
 				elseif (result == FilterResult.Abort) then
@@ -321,7 +321,7 @@ function placeBid(request)
 					removeRequestFromQueue();
 				end
 			else
-				debugPrint("Skipping auction due to no auction id (index", indexOnPage, ")");
+				debugPrint("Skipping auction due to no auction id (index "..indexOnPage..")");
 			end
 		end
 	end
@@ -373,12 +373,12 @@ function bidCompleteCallback(auction, result)
 			-- Increment the request's current index if the auction was not bought.
 			if (not request.isBuyout) then
 				request.currentIndex = request.currentIndex + 1;
-				debugPrint("Incrementing the request's currentIndex to", request.currentIndex);
+				debugPrint("Incrementing the request's currentIndex to "..request.currentIndex);
 			end
 		else
 			-- Skip over the auction we failed to bid on.
 			request.currentIndex = request.currentIndex + 1;
-			debugPrint("Incrementing the request's currentIndex to", request.currentIndex);
+			debugPrint("Incrementing the request's currentIndex to "..request.currentIndex);
 		end
 
 		-- Get ready to send the next bid if we haven't reached the limit.
@@ -449,8 +449,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.BidScanner]", ...);
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.BidScanner]"..message);
 end
 
 -------------------------------------------------------------------------------

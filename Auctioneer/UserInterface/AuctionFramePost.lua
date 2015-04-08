@@ -419,7 +419,7 @@ end
 function AuctionFramePost_AddAuction(frame, snapshotAuction)
 	local auction = frame:AuctionFromSnapshotAuction(snapshotAuction);
 	table.insert(frame.auctions, auction);
-	debugPrint("Added auction at index", #frame.auctions);
+	debugPrint("Added auction at index"..table.getn(frame.auctions)); --Logon code replaced # with table.getn
 	ListTemplate_SetContent(frame.auctionList, frame.auctions);
 end
 
@@ -428,7 +428,7 @@ end
 -------------------------------------------------------------------------------
 function AuctionFramePost_UpdateAuction(frame, snapshotAuction)
 	local auctions = frame.auctions;
-	for index = 1, #auctions do
+	for index = 1, table.getn(auctions) do -- replaced #auctions
 		local auction = frame.auctions[index];
 		if (auction.auctionId == snapshotAuction.auctionId) then
 			debugPrint("Found auction to update at index "..index);
@@ -1059,7 +1059,7 @@ end
 function AuctionFramePost_ListItem_OnClick(self, row, button)
 	local frame = self:GetParent():GetParent();
 	debugPrint(frame:GetName());
-	if (row and row <= #frame.auctions) then
+	if (row and row <= table.getn(frame.auctions)) then --Logon code replaced code #frame.auctions replaced table.getn
 		if (button == "RightButton") then
 			return Auctioneer.UI.AuctionDropDownMenu.Show(frame.auctions[row].auctionId);
 		end
@@ -1142,8 +1142,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.PostTab]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.PostTab]"..message);
 end
 
 --=============================================================================

@@ -678,8 +678,8 @@ chatPrint = Auctioneer.Util.ChatPrint;
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.PostManager]", ...);
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.PostManager]"..message);
 end
 
 -------------------------------------------------------------------------------

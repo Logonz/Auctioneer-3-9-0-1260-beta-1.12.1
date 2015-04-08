@@ -262,7 +262,7 @@ function loadDatabase()
 	-- Upgrade each realm-faction database, if needed.
 	for ahKey in pairs(AuctioneerSnapshotDB) do
 		if (not upgradeAHDatabase(AuctioneerSnapshotDB[ahKey])) then
-			debugPrint("WARNING: Snapshot database corrupted for", ahKey, "! Creating new database.");
+			debugPrint("WARNING: Snapshot database corrupted for "..ahKey.."! Creating new database.");
 			AuctioneerSnapshotDB[ahKey] = createAHDatabase(ahKey);
 		end
 	end
@@ -308,7 +308,7 @@ function upgradeAHDatabase(ah)
 	end
 
 	-- Future DB upgrade code goes here...
-	debugPrint("Upgrading snapshot database for", ah.ahKey);
+	debugPrint("Upgrading snapshot database for "..ah.ahKey);
 
 	-- Return the result of the upgrade!
 	return (ah.version == CURRENT_SNAPSHOTDB_VERSION);
@@ -346,12 +346,12 @@ function clear(itemKey, ahKey)
 				end
 			end
 			ah.auctionIdsByItemKey[itemKey] = nil;
-			debugPrint("Removed", itemKey, "from snapshot database", ah.ahKey);
+			debugPrint("Removed "..itemKey.." from snapshot database "..ah.ahKey);
 		else
 			-- Toss the entire database by recreating it.
 			LoadedSnapshotDB[ah.ahKey] = createAHDatabase(ah.ahKey);
 			ah.updates = {};
-			debugPrint("Cleared snapshot database for", ah.ahKey);
+			debugPrint("Cleared snapshot database for "..ah.ahKey);
 		end
 	end
 end
@@ -369,14 +369,14 @@ function updateForQuery(ahKey, query, auctions, partial)
 	ahKey = ahKey or Auctioneer.Util.GetAuctionKey();
 	local ah = getAHDatabase(ahKey, true);
 
-	debugPrint("Updating snapshot", ahKey, "for query: ");
-	debugPrint("    name", query.name);
-	debugPrint("    minLevel", query.minLevel);
-	debugPrint("    maxLevel", query.maxLevel);
-	debugPrint("    invTypeIndex", query.invTypeIndex);
-	debugPrint("    classIndex", query.classIndex);
-	debugPrint("    subclassIndex", query.subclassIndex);
-	debugPrint("    qualityIndex", query.qualityIndex);
+	debugPrint("Updating snapshot "..ahKey.." for query: ");
+	debugPrint("    name "..query.name);
+	debugPrint("    minLevel ".. query.minLevel);
+	debugPrint("    maxLevel ".. query.maxLevel);
+	debugPrint("    invTypeIndex ".. query.invTypeIndex);
+	debugPrint("    classIndex ".. query.classIndex);
+	debugPrint("    subclassIndex ".. query.subclassIndex);
+	debugPrint("    qualityIndex "..query.qualityIndex);
 
 	-- Convert the pages into a list of auctions. Auctions get filed first under
 	-- itemKey, then under auctionSignature. We do this so all auctions of the same
@@ -499,7 +499,7 @@ function updateForSignature(ahKey, auctionSignature, auctions, partial)
 	-- Use the default auction house for the zone if none was provided.
 	ahKey = ahKey or Auctioneer.Util.GetAuctionKey();
 	local ah = getAHDatabase(ahKey, true);
-	debugPrint("Updating snapshot", ahKey, "for signature:", auctionSignature);
+	debugPrint("Updating snapshot "..ahKey.." for signature: "..auctionSignature);
 
 	-- Get the matching auctions from the snapshot.
 	local auctionsInSnapshot = {};
@@ -530,7 +530,7 @@ end
 function updateAuction(auction)
 	-- Use the default auction house for the zone if none was provided.
 	local ah = getAHDatabase(auction.ahKey, true);
-	debugPrint("Updating snapshot", auction.ahKey, "for auction:", auction.auctionId);
+	debugPrint("Updating snapshot "..auction.ahKey.." for auction: "..auction.auctionId);
 
 	-- Update the auction in the database if its valid.
 	if (Auctioneer.QueryManager.IsAuctionValid(auction)) then
@@ -538,10 +538,10 @@ function updateAuction(auction)
 		if (auctionInSnapshot) then
 			updateAuctionInSnapshot(ah, auctionInSnapshot, auction);
 		else
-			debugPrint("WARNING: Auction", auction.auctionId, "not in snapshot");
+			debugPrint("WARNING: Auction "..auction.auctionId.." not in snapshot");
 		end
 	else
-		debugPrint("WARNING: Auction", auction.auctionId, "is not valid");
+		debugPrint("WARNING: Auction "..auction.auctionId.." is not valid");
 	end
 end
 
@@ -551,7 +551,7 @@ end
 function addAuction(auction)
 	-- Use the default auction house for the zone if none was provided.
 	local ah = getAHDatabase(auction.ahKey, true);
-	debugPrint("Adding auction to snapshot", auction.ahKey);
+	debugPrint("Adding auction to snapshot "..auction.ahKey);
 
 	-- Add the auction to the database if its valid.
 	if (Auctioneer.QueryManager.IsAuctionValid(auction)) then
@@ -568,14 +568,14 @@ end
 function removeAuction(auction)
 	-- Use the default auction house for the zone if none was provided.
 	local ah = getAHDatabase(auction.ahKey, true);
-	debugPrint("Updating snapshot", auction.ahKey, "for auction:", auction.auctionId);
+	debugPrint("Updating snapshot "..auction.ahKey.." for auction: "..auction.auctionId);
 
 	-- Update the auction in the database.
 	local auctionInSnapshot = getAuctionById(auction.ahKey, auction.auctionId);
 	if (auctionInSnapshot) then
 		removeAuctionFromSnapshot(ah, auctionInSnapshot);
 	else
-		debugPrint("WARNING: Auction", auction.auctionId, "not in snapshot");
+		debugPrint("WARNING: Auction "..auction.auctionId.." not in snapshot");
 	end
 end
 
@@ -673,7 +673,7 @@ function doesItemKeyMatchQuery(itemKey, query)
 	-- Get the information about the item.
 	local itemInfo = Auctioneer.ItemDB.GetItemInfo(itemKey);
 	if (not itemInfo) then
-		debugPrint("WARNING: Unable to get item info for itemKey", itemKey);
+		debugPrint("WARNING: Unable to get item info for itemKey "..itemKey);
 		return false;
 	end
 	local equipLoc= itemInfo.equipLocName
@@ -702,7 +702,7 @@ end
 -- Reconciles auctions in an update against auctions in the snapshot.
 -------------------------------------------------------------------------------
 function reconcileAuctionsForSignature(ah, auctionSignature, auctionsInUpdate, auctionsInSnapshot, partial)
-	debugPrint("Reconcling auctions:", auctionSignature, "(", #auctionsInUpdate, "in update;", #auctionsInSnapshot, " in snapshot)");
+	debugPrint("Reconcling auctions: "..auctionSignature.." ("table.getn(auctionsInUpdate).." in update;"..table.getn(auctionsInSnapshot).." in snapshot"; -- Logon code replaced # with table.getn
 
 	-- Sort the auctions in the update by time left and bid amount.
 	table.sort(
@@ -767,7 +767,7 @@ function reconcileAuction(ah, auctionInUpdate, auctionsInSnapshot)
 			local minTimeLeft = getTimeLeft(TimeLeftInSeconds[auctionInSnapshot.timeLeft - 1] - timeElapsed);
 			local timeUntilExpiration = auctionInSnapshot.expiration - auctionInSnapshot.lastSeen;
 			local maxTimeLeft = getTimeLeft(timeUntilExpiration - timeElapsed + (300 * maxBids));
-			debugPrint("timeUntilExpiration", timeUntilExpiration, "timeElapsed", timeElapsed, "minTimeLeft", minTimeLeft, "timeLeft", auctionInUpdate.timeLeft, "maxTimeLeft", maxTimeLeft);
+			debugPrint("timeUntilExpiration "..timeUntilExpiration.." timeElapsed ".timeElapsed.." minTimeLeft "..minTimeLeft.." timeLeft "..auctionInUpdate.timeLeft.." maxTimeLeft "..maxTimeLeft);
 
 			-- Check if we have a possible match based on time left.
 			if (minTimeLeft <= auctionInUpdate.timeLeft and auctionInUpdate.timeLeft <= maxTimeLeft) then
@@ -886,7 +886,7 @@ function addAuctionToSnapshot(ah, auction)
 	table.insert(auctionIdsForItemKey, auction.auctionId);
 
 	-- Fire the auction added event.
-	debugPrint("Added auction", auction.auctionId, ":", packedAuction);
+	debugPrint("Added auction "..auction.auctionId..":"..packedAuction);
 	Auctioneer.EventManager.FireEvent("AUCTIONEER_AUCTION_ADDED", auction);
 end
 
@@ -919,7 +919,7 @@ function updateAuctionInSnapshot(ah, oldAuction, newAuction)
 		debugPrint("Updated auction "..newAuction.auctionId.. ": "..packedAuction);
 		Auctioneer.EventManager.FireEvent("AUCTIONEER_AUCTION_UPDATED", newAuction, oldAuction);
 	else
-		debugPrint("Unchanged auction", newAuction.auctionId, ":", packedAuction);
+		debugPrint("Unchanged auction "..newAuction.auctionId..":"..packedAuction);
 	end
 end
 
@@ -943,7 +943,7 @@ function removeAuctionFromSnapshot(ah, auction)
 	end
 
 	-- Fire the auction removed event.
-	debugPrint("Removed auction", auction.auctionId, ":", packAuction(auction));
+	debugPrint("Removed auction "..auction.auctionId..":"..packAuction(auction));
 	Auctioneer.EventManager.FireEvent("AUCTIONEER_AUCTION_REMOVED", auction);
 end
 
@@ -1017,7 +1017,7 @@ function addUpdate(ah, query)
 	local update = createUpdateFromQuery(query);
 	update.date = time();
 	table.insert(ah.updates, packUpdate(update));
-	debugPrint("Added update at index", #ah.updates);
+	debugPrint("Added update at index ".. table.getn(ah.updates)); --Logon code replaced # with table.getn
 end
 
 -------------------------------------------------------------------------------
@@ -1029,10 +1029,10 @@ function removeSubsetUpdates(ah, query)
 	for index = #ah.updates, 1, -1 do
 		local updateAtIndex = unpackUpdate(ah.updates[index]);
 		if (updateAtIndex.date + (24 * 60 * 60) < time()) then
-			debugPrint("Removed update at index", index, "(age)");
+			debugPrint("Removed update at index "..index.."(age)");
 			table.remove(ah.updates, index);
 		elseif (isUpdateSubsetOfUpdate(updateAtIndex, update)) then
-			debugPrint("Removed update at index", index, "(subset)");
+			debugPrint("Removed update at index "..index.."(subset)");
 			table.remove(ah.updates, index);
 		end
 	end
@@ -1139,8 +1139,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.SnapshotDB]", ...);
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.SnapshotDB]"..message);
 end
 
 --=============================================================================

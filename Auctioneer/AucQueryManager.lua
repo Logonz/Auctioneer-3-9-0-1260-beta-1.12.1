@@ -185,7 +185,7 @@ function AucQueryManager_OnUpdate()
 						request.maxRetries = request.maxRetries - 1;
 						sendQuery(request);
 					else
-						debugPrint("Query response not received in the last", silence, "seconds (maxSilence=", request.maxSilence, ")");
+						debugPrint("Query response not received in the last "..silence.." seconds (maxSilence="..request.maxSilence..")");
 						removeRequestFromQueue(QueryAuctionItemsResultCodes.PartialComplete);
 					end
 				end
@@ -221,7 +221,7 @@ function onBidSent(event, auction, bid)
 			receivedAuctionItemListUpdate = false;
 		};
 		PendingBidInfo[auction.auctionId] = bidInfo;
-		debugPrint("Added pending bid for auction", auction.auctionId);
+		debugPrint("Added pending bid for auction "..auction.auctionId);
 	else
 		debugPrint("Ignoring bid sent due to no auction id");
 	end
@@ -240,13 +240,13 @@ function onBidComplete(event, auction, bid, result)
 			-- received the AUCTION_ITEM_LIST_UPDATE event.
 			if (result ~= BidResultCodes.BidAccepted or bidInfo.receivedAuctionItemListUpdate) then
 				PendingBidInfo[auction.auctionId] = nil;
-				debugPrint("Removed pending bid for auction", auction.auctionId);
+				debugPrint("Removed pending bid for auction "..auction.auctionId);
 			else
 				bidInfo.receivedBidComplete = true;
-				debugPrint("Deferring removal of pending bid for auction", auction.auctionId);
+				debugPrint("Deferring removal of pending bid for auction "..auction.auctionId);
 			end
 		else
-			debugPrint("WARNING: No pending bid for auction", auction.auctionId);
+			debugPrint("WARNING: No pending bid for auction "..auction.auctionId);
 		end
 	else
 		debugPrint("Ignoring bid complete due to no auction id");
@@ -1040,8 +1040,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.QueryManager]", date("%X"), ...);
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.QueryManager] "..date("%X").." "..message);
 end
 
 -------------------------------------------------------------------------------

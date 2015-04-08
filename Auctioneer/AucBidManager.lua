@@ -253,7 +253,7 @@ function addPendingBid(listType, index, bid, callbackFunc)
 		auction = Auctioneer.SnapshotDB.GetAuctionById(nil, auctionId);
 	end
 	if (auction and auction.auctionId) then
-		debugPrint("Found in snapshot:", auction.auctionId);
+		debugPrint("Found in snapshot:"..auction.auctionId);
 	else
 		debugPrint("Did not find auction in snapshot");
 		auction = Auctioneer.QueryManager.GetAuctionByIndex(listType, index);
@@ -327,8 +327,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.BidManager]", ...);
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.BidManager]"..message);
 end
 
 -------------------------------------------------------------------------------

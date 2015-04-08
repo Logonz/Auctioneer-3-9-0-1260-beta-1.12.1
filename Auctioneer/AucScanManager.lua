@@ -139,7 +139,7 @@ function scan()
 		debugPrint("Scanning all categories");
 		return scanAll();
 	else
-		debugPrint("Scanning", #categories, "categories");
+		debugPrint("Scanning "..table.getn(categories).." categories");-- Fixed #categories to table.getn //Logon
 		return scanCategories(categories);
 	end
 end
@@ -238,7 +238,7 @@ function removeRequestFromQueue()
 		-- Remove the request from the queue.
 		local request = RequestQueue[1];
 		table.remove(RequestQueue, 1);
-		debugPrint("Removed request from queue with result:", request.state);
+		debugPrint("Removed request from queue with result: "..request.state);
 
 		-- If the request succeeded, add the auctions scanned to the total.
 		LastRequestResult = request.state;
@@ -258,7 +258,7 @@ function sendQuery(request)
 	end
 
 	-- Send the query!
-	debugPrint("Requesting page", request.nextPage);
+	debugPrint("Requesting page "..request.nextPage);
 	request.state = RequestState.WaitingForQueryResult;
 	Auctioneer.QueryManager.QueryAuctionItems(
 		request.name,
@@ -286,7 +286,7 @@ function queryCompleteCallback(query, result)
 		local request = RequestQueue[1];
 		if (result == QueryAuctionItemsResultCodes.Complete or result == QueryAuctionItemsResultCodes.PartialComplete) then
 			-- Query succeeded so update the request.
-			debugPrint("Scanned page", request.nextPage);
+			debugPrint("Scanned page "..request.nextPage);
 			local lastIndexOnPage, totalAuctions = GetNumAuctionItems("list");
 
 			-- Is this the first query?
@@ -306,14 +306,14 @@ function queryCompleteCallback(query, result)
 					request.nextPage = request.pages - 1;
 					Auctioneer.QueryManager.ClearPageCache();
 				end
-				debugPrint("Found", request.totalAuctions, "auctions (", request.pages, "pages)");
+				debugPrint("Found "..request.totalAuctions.." auctions ("..request.pages.." pages)");
 			else
 				-- Tweak the start time if it happened in less than 5 seconds.
 				local currentTime = GetTime();
 				local timeElapsed = currentTime - request.startTime;
 				local pagesScanned = request.pages - request.nextPage;
 				local minTimeElapsed = 5.0 * (pagesScanned);
-				debugPrint(pagesScanned, "pages scanned thus far in", timeElapsed);
+				debugPrint(pagesScanned.." pages scanned thus far in "..timeElapsed);
 				if (timeElapsed < minTimeElapsed) then
 					debugPrint("Adjusted request.startTime to keep the time remaining accurate.");
 					request.startTime = currentTime - minTimeElapsed;
@@ -404,7 +404,7 @@ function scanEnded()
 	-- Scanning has ended!
 	Scanning = false;
 	Auctioneer.Scanning.IsScanningRequested = false;
-	debugPrint("Scan ended with result:", LastRequestResult);
+	debugPrint("Scan ended with result: "..LastRequestResult);
 
 	-- Unregister for snapshot events.
 	Auctioneer.EventManager.UnregisterEvent("AUCTIONEER_AUCTION_ADDED", onAuctionAdded);
@@ -506,8 +506,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.ScanManager]", ...);
+function debugPrint(messages)
+	EnhTooltip.DebugPrint("[Auc.ScanManager]"..messages);
 end
 
 -------------------------------------------------------------------------------

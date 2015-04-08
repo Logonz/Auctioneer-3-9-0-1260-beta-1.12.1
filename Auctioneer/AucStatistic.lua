@@ -168,11 +168,11 @@ function clearCache(itemKey, ahKey)
 			cache.historicalMedians[itemKey] = nil;
 			cache.lowestBuyoutAuctionId[itemKey] = nil;
 			cache.hspInfo[itemKey] = nil;
-			debugPrint("Removed", itemKey, "from cache", cache.ahKey);
+			debugPrint("Removed "..itemKey.." from cache "..cache.ahKey);
 		else
 			-- Toss the entire cache by recreating it.
 			AuctioneerCache[cache.ahKey] = createCacheForAHKey(cache.ahKey);
-			debugPrint("Cleared cache database for", cache.ahKey);
+			debugPrint("Cleared cache database for "..cache.ahKey);
 		end
 	end
 end
@@ -672,7 +672,7 @@ function getHSP(itemKey, ahKey)
 	cache.hspInfo[itemKey] = Auctioneer.Database.PackRecord(info, HSPInfoMetaData);
 	--Auctioneer.Util.ChatPrint("HSP calculation took "..debugprofilestop());
 
-	debugPrint("Calculated HSP for", itemKey, ": hsp=", info.hsp, "; count=", info.count, "; market=", info.market, "; warn=", info.warn);
+	debugPrint("Calculated HSP for "..itemKey..": hsp="..info.hsp.."; count="..info.count.."; market="..info.market.."; warn="..info.warn);
 	return info.hsp, info.count, info.market, info.warn;
 end
 
@@ -808,8 +808,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.Statistic]", ...);
+function debugPrint(messsage)
+	EnhTooltip.DebugPrint("[Auc.Statistic]", messsage);
 end
 
 -------------------------------------------------------------------------------

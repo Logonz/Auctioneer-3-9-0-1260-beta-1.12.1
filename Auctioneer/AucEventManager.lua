@@ -99,8 +99,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.EventManager]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.EventManager]"..message);
 end
 
 -------------------------------------------------------------------------------

@@ -151,8 +151,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	return EnhTooltip.DebugPrint("[Auc.UI.DropDown]", ...);
+function debugPrint(message)
+	return EnhTooltip.DebugPrint("[Auc.UI.DropDown]"..message);
 end
 
 --=============================================================================

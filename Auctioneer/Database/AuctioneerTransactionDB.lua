@@ -178,7 +178,7 @@ function loadDatabase()
 	-- Upgrade each realm-faction database (if needed).
 	for ahKey in pairs(AuctioneerTransactionDB) do
 		if (not upgradeAHDatabase(AuctioneerTransactionDB[ahKey], CURRENT_TRANSACTIONDB_VERSION)) then
-			debugPrint("WARNING: Transaction database corrupted for", ahKey, "! Creating new database.");
+			debugPrint("WARNING: Transaction database corrupted for "..ahKey.."! Creating new database.");
 			AuctioneerTransactionDB[ahKey] = createAHDatabase(ahKey);
 		end
 	end
@@ -293,7 +293,7 @@ function upgradeAHDatabase(ah, version)
 	end
 
 	-- Future DB upgrade code goes here...
-	debugPrint("Upgrading transaction database for", ah.ahKey, "to version", version);
+	debugPrint("Upgrading transaction database for "..ah.ahKey.." to version "..version);
 
 	-- Return the result of the upgrade!
 	return (ah.version == version);
@@ -406,7 +406,7 @@ function clear(ahKey)
 	if (ah) then
 		-- Toss the entire database by recreating it.
 		LoadedTransactionDB[ah.ahKey] = createAHDatabase(ah.ahKey);
-		debugPrint("Cleared transaction database for", ah.ahKey);
+		debugPrint("Cleared transaction database for "..ah.ahKey);
 	end
 end
 
@@ -419,8 +419,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function debugPrint(...)
-	EnhTooltip.DebugPrint("[Auc.TransactionDB]", ...)
+function debugPrint(message)
+	EnhTooltip.DebugPrint("[Auc.TransactionDB]"..message)
 end
 
 --=============================================================================
