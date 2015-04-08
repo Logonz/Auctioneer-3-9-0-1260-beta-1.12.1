@@ -1,5 +1,0 @@
-## Interface: 11200
-## Title: Swatter
-## Notes: Debugging tool for handling and displaying of error messages in a useful way.
-## SavedVariables: SwatterData
-Swatter.lua
