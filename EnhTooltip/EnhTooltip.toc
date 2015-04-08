@@ -1,0 +1,15 @@
+## Title: EnhTooltip
+## Notes: Used to display enhanced tooltips under the original tooltip or in the original tooltip, contains hooking functions for almost all major in game item tooltips [3.9.0.1237] This AddOn is licenced under the GNU GPL, see GPL.txt for details.
+##
+## Interface: 20000
+## LoadOnDemand: 1
+## Dependencies: Stubby
+##
+## Version: 3.9.0.1237 (Kangaroo)
+## Revision: $Id: EnhTooltip.toc 1072 2006-10-24 05:21:43Z mentalpower $
+## URL: http://auctioneeraddon.com/dl/EnhTooltip
+
+TinyMoneyFrame.lua
+TinyMoneyFrame.xml
+Tooltip.lua
+Tooltip.xml
