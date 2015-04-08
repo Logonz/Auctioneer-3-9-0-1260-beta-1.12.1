@@ -2,8 +2,8 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 <!--
-	Version: 3.9.0.1252 (Kangaroo)
-	Revision: $Id: Stubby.xml 1090 2006-11-24 02:58:29Z mentalpower $
+	Version: 3.9.0.1053 (Kangaroo)
+	Revision: $Id: Stubby.xml 1049 2006-10-06 19:42:42Z mentalpower $
 
 	License:
 		This program is free software; you can redistribute it and/or
@@ -19,22 +19,15 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 		You should have received a copy of the GNU General Public License
 		along with this program(see GLP.txt); if not, write to the Free Software
 		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-	Note:
-		This AddOn's source code is specifically designed to work with
-		World of Warcraft's interpreted AddOn system.
-		You have an implicit licence to use this AddOn with these facilities
-		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
 -->
 
 	<Frame name="StubbyFrame" parent="UIParent" hidden="true">
 		<Scripts>
 			<OnLoad>
-				self:RegisterEvent("ADDON_LOADED");
+				this:RegisterEvent("ADDON_LOADED");
 			</OnLoad>
 			<OnEvent>
-				Stubby.Events(event, ...)
+				Stubby.Events(event, arg1)
 			</OnEvent>
 		</Scripts>
 	</Frame>
