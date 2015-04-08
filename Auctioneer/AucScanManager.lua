@@ -424,10 +424,10 @@ function scanEnded()
 		chatResultText = "Scan failed"; -- %todo: Localize
 		uiResultText = "Auctioneer: auction scanning failed"; -- %todo: Localize
 	end
-	local auctionsScannedMessage = _AUCT('AuctionTotalAucts'):format(AuctionsScanned);
-	local auctionsAddedMessage = _AUCT('AuctionNewAucts'):format(AuctionsAdded);
-	local auctionsRemovedMessage = _AUCT('AuctionDefunctAucts'):format(AuctionsRemoved);
-	local auctionsUpdatedMessage = _AUCT('AuctionOldAucts'):format(AuctionsUpdated);
+	local auctionsScannedMessage = string.format(_AUCT('AuctionTotalAucts'), AuctionsScanned);
+	local auctionsAddedMessage = string.format(_AUCT('AuctionNewAucts'), AuctionsAdded);
+	local auctionsRemovedMessage = string.format(_AUCT('AuctionDefunctAucts'), AuctionsRemoved);
+	local auctionsUpdatedMessage = string.format(_AUCT('AuctionOldAucts'), AuctionsUpdated);
 
 	-- Report the result to the chat window.
 	chatPrint(chatResultText..":");
@@ -474,7 +474,7 @@ function updateScanProgressUI()
 
 			-- Update the progress of this request in the UI.
 			BrowseNoResultsText:SetText(
-				_AUCT('AuctionPageN'):format(
+				string.format(_AUCT('AuctionPageN'),
 					request.description,
 					request.pages - request.nextPage,
 					request.pages,

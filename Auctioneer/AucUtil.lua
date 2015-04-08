@@ -217,7 +217,7 @@ function colorTextWhite(text)
 	local COLORING_START = "|cff%s%s|r";
 	local WHITE_COLOR = "e6e6e6";
 
-	return COLORING_START:format(WHITE_COLOR, ""..text);
+	return string.format(COLORING_START, WHITE_COLOR, ""..text);
 end
 
 function getWarnColor(warn)
@@ -238,8 +238,8 @@ function getWarnColor(warn)
 		FrmtWarnNodata = _AUCT('FrmtWarnNodata');
 		FrmtWarnMyprice = _AUCT('FrmtWarnMyprice');
 
-		FrmtWarnUndercut = _AUCT('FrmtWarnUndercut'):format(tonumber(Auctioneer.Command.GetFilterVal('pct-underlow')));
-		FrmtWarnMarkup = _AUCT('FrmtWarnMarkup'):format(tonumber(Auctioneer.Command.GetFilterVal('pct-markup')));
+		FrmtWarnUndercut = string.format(_AUCT('FrmtWarnUndercut'), tonumber(Auctioneer.Command.GetFilterVal('pct-underlow')));
+		FrmtWarnMarkup = string.format(_AUCT('FrmtWarnMarkup'), tonumber(Auctioneer.Command.GetFilterVal('pct-markup')));
 
 		if (warn == FrmtWarnToolow) then
 			--Color Red

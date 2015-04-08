@@ -327,7 +327,7 @@ function getItemLink(itemKey)
 	if (itemInfo) then
 		local _, _, _, hexColor = GetItemQualityColor(itemInfo.quality);
 		local itemId, suffixId, enchantId = breakItemKey(itemKey);
-		return ("%s|Hitem:%s:%s:0:0:0:0:%s:0|h[%s]|h|r"):format(hexColor, itemId, enchantId, suffixId, itemInfo.name);
+		return string.format("%s|Hitem:%s:%s:0:0:0:0:%s:0|h[%s]|h|r", hexColor, itemId, enchantId, suffixId, itemInfo.name);
 	end
 end
 
@@ -337,7 +337,7 @@ end
 -------------------------------------------------------------------------------
 function getItemString(itemKey)
 	local itemId, suffixId, enchantId = breakItemKey(itemKey);
-	return ("item:%s:%s:0:0:0:0:%s:0"):format(itemId, enchantId, suffixId);
+	return string.format("item:%s:%s:0:0:0:0:%s:0", itemId, enchantId, suffixId);
 end
 
 -------------------------------------------------------------------------------

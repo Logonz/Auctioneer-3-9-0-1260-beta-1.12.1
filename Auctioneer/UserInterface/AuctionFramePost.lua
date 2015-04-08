@@ -307,7 +307,7 @@ function AuctionFramePost_UpdatePriceModels(frame)
 					if (lastSale and lastSale.bid and lastSale.buyout) then
 						local lastPrice = {};
 						lastPrice.text = _AUCT('UiPriceModelLastSold');
-						lastPrice.note = _AUCT('FrmtLastSoldOn'):format(date("%x", lastSale.time));
+						lastPrice.note = string.format(_AUCT('FrmtLastSoldOn'), date("%x", lastSale.time));
 						lastPrice.bid = (lastSale.bid / lastSale.quantity) * count;
 						lastPrice.buyout = (lastSale.buyout / lastSale.quantity) * count;
 						table.insert(frame.prices, lastPrice);
@@ -470,7 +470,7 @@ function AuctionFramePost_UpdateStatusText(frame)
 		local now = time();
 		local age = time() - lastUpdate;
 		if (age >= 0 and age < (24 * 60 * 60)) then
-			local output = ("Results are %d minute(s) old"):format(math.floor(age / 60)); -- %todo: localize
+			local output = string.format(("Results are %d minute(s) old"), math.floor(age / 60)); -- %todo: localize
 			frame.statusText:SetText(output);
 		else
 			frame.statusText:SetText("Results are more than 24 hours out of date!"); -- %todo: localize
@@ -805,7 +805,7 @@ function AuctionFramePost_ValidateAuction(frame)
 				quantityErrorText:SetTextColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b);
 				quantityErrorText:Show();
 			else
-				local msg = _AUCT('UiMaxError'):format(quantity);
+				local msg = string.format(_AUCT('UiMaxError'), quantity);
 				quantityErrorText:SetText(msg);
 				quantityErrorText:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b);
 				quantityErrorText:Show();

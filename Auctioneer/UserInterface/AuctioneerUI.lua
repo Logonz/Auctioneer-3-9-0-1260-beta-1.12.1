@@ -194,7 +194,7 @@ function preContainerFrameItemButtonOnModifiedClickHook(hookParams, returnValue,
 				local cHex, cRed, cGreen, cBlue = Auctioneer.Util.GetWarnColor(warn)
 				warn = ("|c"..cHex..warn.."|r")
 				StartAuction(start, buy, duration);
-				chatPrint(_AUCT('FrmtAutostart'):format(link, EnhTooltip.GetTextGSC(start), EnhTooltip.GetTextGSC(buy), duration/60, warn));
+				chatPrint(string.format(_AUCT('FrmtAutostart'), link, EnhTooltip.GetTextGSC(start), EnhTooltip.GetTextGSC(buy), duration/60, warn));
 			end
 			return "abort";
 		end

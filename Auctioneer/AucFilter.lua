@@ -391,7 +391,7 @@ function doBroker(minProfit)
 	elseif (tonumber(minProfit)) then
 		minProfit = tonumber(minProfit) * 100
 	else
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtActUnknown'):format(minProfit))
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActUnknown'), minProfit))
 		return
 	end
 
@@ -402,7 +402,7 @@ function doBroker(minProfit)
 	table.sort(auctions, function(a, b) return (Auctioneer.Statistic.GetBuyoutProfit(a) > Auctioneer.Statistic.GetBuyoutProfit(b)) end);
 
 	-- Output the list of auctions
-	local output = _AUCT('FrmtBrokerHeader'):format(EnhTooltip.GetTextGSC(minProfit));
+	local output = string.format(_AUCT('FrmtBrokerHeader'), EnhTooltip.GetTextGSC(minProfit));
 	Auctioneer.Util.ChatPrint(output);
 	for _,auction in pairs(auctions) do
 		local itemKey = Auctioneer.ItemDB.CreateItemKeyFromAuction(auction);
@@ -412,7 +412,7 @@ function doBroker(minProfit)
 		local profit = Auctioneer.Statistic.GetBuyoutProfit(auction, hsp);
 		local buyout = auction.buyoutPrice;
 		local count = auction.count;
-		local output = _AUCT('FrmtBrokerLine'):format(Auctioneer.Util.ColorTextWhite(auction.count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), EnhTooltip.GetTextGSC(buyout), EnhTooltip.GetTextGSC(profit));
+		local output = string.format(_AUCT('FrmtBrokerLine'), Auctioneer.Util.ColorTextWhite(auction.count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), EnhTooltip.GetTextGSC(buyout), EnhTooltip.GetTextGSC(profit));
 		Auctioneer.Util.ChatPrint(output);
 	end
 	Auctioneer.Util.ChatPrint(_AUCT('FrmtBrokerDone'));
@@ -429,7 +429,7 @@ function doBidBroker(minProfit)
 	elseif (tonumber(minProfit)) then
 		minProfit = tonumber(minProfit) * 100
 	else
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtActUnknown'):format(minProfit))
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActUnknown'), minProfit))
 		return;
 	end
 
@@ -441,7 +441,7 @@ function doBidBroker(minProfit)
 	table.sort(auctions, function(a, b) return (a.timeLeft < b.timeLeft) end);
 
 	-- Output the list of auctions
-	local output = _AUCT('FrmtBidbrokerHeader'):format(EnhTooltip.GetTextGSC(minProfit));
+	local output = string.format(_AUCT('FrmtBidbrokerHeader'), EnhTooltip.GetTextGSC(minProfit));
 	Auctioneer.Util.ChatPrint(output);
 	for _,auction in pairs(auctions) do
 		local bidText = _AUCT('FrmtBidbrokerCurbid');
@@ -456,7 +456,7 @@ function doBidBroker(minProfit)
 		local currentBid = Auctioneer.SnapshotDB.GetCurrentBid(auction);
 		local profit = Auctioneer.Statistic.GetBidProfit(auction, hsp);
 		local timeLeft = auction.timeLeft;
-		local output = _AUCT('FrmtBidbrokerLine'):format(Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), bidText, EnhTooltip.GetTextGSC(currentBid), EnhTooltip.GetTextGSC(profit), Auctioneer.Util.ColorTextWhite(Auctioneer.Util.GetTimeLeftString(timeLeft)));
+		local output = string.format(_AUCT('FrmtBidbrokerLine'), Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), bidText, EnhTooltip.GetTextGSC(currentBid), EnhTooltip.GetTextGSC(profit), Auctioneer.Util.ColorTextWhite(Auctioneer.Util.GetTimeLeftString(timeLeft)));
 		Auctioneer.Util.ChatPrint(output);
 	end
 	Auctioneer.Util.ChatPrint(_AUCT('FrmtBidbrokerDone'));
@@ -472,7 +472,7 @@ function doCompeting(minLess)
 	elseif (tonumber(minLess)) then
 		minLess = tonumber(minLess) * 100
 	else
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtActUnknown'):format(minLess))
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActUnknown'), minLess))
 		return
 	end
 
@@ -484,7 +484,7 @@ function doCompeting(minLess)
 	table.sort(auctions, function(a, b) return (Auctioneer.Statistic.GetBuyoutProfit(a) > Auctioneer.Statistic.GetBuyoutProfit(b)) end);
 
 	-- Output the list of auctions undercutting auctions.
-	local output = _AUCT('FrmtCompeteHeader'):format(EnhTooltip.GetTextGSC(minLess));
+	local output = string.format(_AUCT('FrmtCompeteHeader'), EnhTooltip.GetTextGSC(minLess));
 	Auctioneer.Util.ChatPrint(output);
 	for _,auction in pairs(auctions) do
 		local itemKey = Auctioneer.ItemDB.CreateItemKeyFromAuction(auction);
@@ -503,7 +503,7 @@ function doCompeting(minLess)
 		local priceLess = myBuyout - (auction.buyoutPrice / auction.count);
 		local lessPrice = EnhTooltip.GetTextGSC(priceLess);
 
-		local output = _AUCT('FrmtCompeteLine'):format(Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, bidPrice, buyPrice, myPrice, lessPrice);
+		local output = string.format(_AUCT('FrmtCompeteLine'), Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, bidPrice, buyPrice, myPrice, lessPrice);
 		Auctioneer.Util.ChatPrint(output);
 	end
 	Auctioneer.Util.ChatPrint(_AUCT('FrmtCompeteDone'));
@@ -524,7 +524,7 @@ function doPercentLess(percentLess)
 	table.sort(auctions, function(a, b) return (Auctioneer.Statistic.GetBuyoutProfit(a) > Auctioneer.Statistic.GetBuyoutProfit(b)) end);
 
 	-- Output the list of auctions
-	local output = _AUCT('FrmtPctlessHeader'):format(percentLess);
+	local output = string.format(_AUCT('FrmtPctlessHeader'), percentLess);
 	Auctioneer.Util.ChatPrint(output);
 	for _,auction in pairs(auctions) do
 		local itemKey = Auctioneer.ItemDB.CreateItemKeyFromAuction(auction);
@@ -534,7 +534,7 @@ function doPercentLess(percentLess)
 		local count = auction.count;
 		local buyout = auction.buyoutPrice;
 		local profit = (hsp * count) - buyout;
-		local output = _AUCT('FrmtPctlessLine'):format(Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), EnhTooltip.GetTextGSC(buyout), EnhTooltip.GetTextGSC(profit), Auctioneer.Util.ColorTextWhite(Auctioneer.Statistic.PercentLessThan(hsp, buyout / count).."%"));
+		local output = string.format(_AUCT('FrmtPctlessLine'), Auctioneer.Util.ColorTextWhite(count.."x")..itemLink, seenCount, EnhTooltip.GetTextGSC(hsp * count), EnhTooltip.GetTextGSC(buyout), EnhTooltip.GetTextGSC(profit), Auctioneer.Util.ColorTextWhite(Auctioneer.Statistic.PercentLessThan(hsp, buyout / count).."%"));
 		Auctioneer.Util.ChatPrint(output);
 	end
 	Auctioneer.Util.ChatPrint(_AUCT('FrmtPctlessDone'));

@@ -239,7 +239,7 @@ function removeRequestFromQueue()
 
 		-- Inform the user if no auctions were found.
 		if (request.state == RequestState.Done and request.bidCount == 0) then
-			local output = _AUCT('FrmtNoAuctionsFound'):format(request.name, request.count);
+			local output = string.format(_AUCT('FrmtNoAuctionsFound'), request.name, request.count);
 			chatPrint(output);
 		end
 
@@ -362,11 +362,11 @@ function bidCompleteCallback(auction, result)
 
 			-- Report the completed bid.
 			if (request.isBuyout) then
-				local output = _AUCT('FrmtBoughtAuction'):format(request.name, request.count);
+				local output = string.format(_AUCT('FrmtBoughtAuction'), request.name, request.count);
 				chatPrint(output);
 
 			else
-				local output = _AUCT('FrmtBidAuction'):format(request.name, request.count);
+				local output = string.format(_AUCT('FrmtBidAuction'), request.name, request.count);
 				chatPrint(output);
 			end
 

@@ -253,10 +253,10 @@ function packNumericList(list)
 	local function GrowList(last, n)
 		if (n == 1) then
 			if (hist == "") then hist = tostring(last);
-			else hist = ("%s:%d"):format(hist, last); end
+			else hist = string.format("%s:%d", hist, last); end
 		elseif (n ~= 0) then
-			if (hist == "") then hist = ("%dx%d"):format(last, n);
-			else hist = ("%s:%dx%d"):format(hist, last, n); end
+			if (hist == "") then hist = string.format("%dx%d", last, n);
+			else hist = string.format("%s:%dx%d", hist, last, n); end
 		end
 	end
 	local n = 0;

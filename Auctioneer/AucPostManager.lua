@@ -210,9 +210,9 @@ function removeRequestFromQueue()
 
 		-- Report the auctions posted
 		if (request.stackPostCount == 1) then
-			chatPrint(_AUCT('FrmtPostedAuction'):format(request.name, request.stackSize));
+			chatPrint(string.format(_AUCT('FrmtPostedAuction'), request.name, request.stackSize));
 		else
-			chatPrint(_AUCT('FrmtPostedAuctions'):format(request.stackPostCount, request.name, request.stackSize));
+			chatPrint(string.format(_AUCT('FrmtPostedAuctions'), request.stackPostCount, request.name, request.stackSize));
 		end
 		table.remove(RequestQueue, 1);
 
@@ -350,7 +350,7 @@ function run(request)
 					end
 				else
 					-- Not enough of the item!
-					chatPrint(_AUCT('FrmtNotEnoughOfItem'):format(request.name));
+					chatPrint(string.format(_AUCT('FrmtNotEnoughOfItem'), request.name));
 					removeRequestFromQueue();
 				end
 			else
@@ -369,7 +369,7 @@ function run(request)
 			end
 		else
 			-- Item not found!
-			chatPrint(_AUCT('FrmtNotEnoughOfItem'):format(request.name));
+			chatPrint(string.format(_AUCT('FrmtNotEnoughOfItem'), request.name));
 			removeRequestFromQueue();
 		end
 	end

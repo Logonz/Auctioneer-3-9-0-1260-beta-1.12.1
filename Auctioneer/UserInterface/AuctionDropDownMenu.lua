@@ -118,7 +118,7 @@ function initialize()
 					Auctioneer.Statistic.ClearCache(itemKey);
 					Auctioneer.SnapshotDB.Clear(itemKey);
 					Auctioneer.HistoryDB.Clear(itemKey);
-					Auctioneer.Util.ChatPrint(_AUCT('FrmtActClearOk'):format(itemLink));
+					Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActClearOk'), itemLink));
 				end
 			UIDropDownMenu_AddButton(clearMenuItem);
 			

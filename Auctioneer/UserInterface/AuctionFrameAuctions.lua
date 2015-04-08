@@ -111,11 +111,11 @@ function onNewAuctionUpdate()
 	if (ahKey and itemKey and count) then
 		-- Set the historical median information.
 		local historicalMedian, historicalMedCount = Auctioneer.Statistic.GetItemHistoricalMedianBuyout(itemKey);
-		auctionsSetLine(1, _AUCT('FrmtAuctinfoHist'):format(historicalMedCount), historicalMedian * count);
+		auctionsSetLine(1, string.format(_AUCT('FrmtAuctinfoHist'), historicalMedCount), historicalMedian * count);
 
 		-- Set the snapshot median information.
 		local snapshotMedian, snapshotMedCount = Auctioneer.Statistic.GetItemSnapshotMedianBuyout(itemKey);
-		auctionsSetLine(2, _AUCT('FrmtAuctinfoSnap'):format(snapshotMedCount), snapshotMedian * count);
+		auctionsSetLine(2, string.format(_AUCT('FrmtAuctinfoSnap'), snapshotMedCount), snapshotMedian * count);
 
 		-- Set the lowest buyout found in the snapshot.
 		local currentLowestBuyout;

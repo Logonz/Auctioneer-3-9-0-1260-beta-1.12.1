@@ -99,7 +99,7 @@ function commandHandler(command, source)
 	--Command not recognized
 	else
 		if (chatprint) then
-			Auctioneer.Util.ChatPrint(_AUCT('FrmtActUnknown'):format(command));
+			Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActUnknown'),command));
 		end
 	end
 end
@@ -110,19 +110,19 @@ function chatPrintHelp()
 
 	Auctioneer.Util.ChatPrint("  |cffffffff/auctioneer askprice"..onOffToggle.."|r |cff2040ff["..Auctioneer.Util.GetLocalizedFilterVal('askprice').."]|r\n          " .. _AUCT('HelpAskPrice') .. "\n\n");
 
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceWhispers'),	Auctioneer.Util.GetLocalizedFilterVal('askprice-whispers'),	_AUCT('HelpAskPriceWhispers')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceVendor'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-vendor'),	_AUCT('HelpAskPriceVendor')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceParty'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-party'),	_AUCT('HelpAskPriceParty')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceGuild'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-guild'),	_AUCT('HelpAskPriceGuild')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceSmart'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-smart'),	_AUCT('HelpAskPriceSmart')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceAd'),			Auctioneer.Util.GetLocalizedFilterVal('askprice-ad'),		_AUCT('HelpAskPriceAd')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceWhispers'),	Auctioneer.Util.GetLocalizedFilterVal('askprice-whispers'),	_AUCT('HelpAskPriceWhispers')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceVendor'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-vendor'),	_AUCT('HelpAskPriceVendor')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceParty'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-party'),	_AUCT('HelpAskPriceParty')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceGuild'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-guild'),	_AUCT('HelpAskPriceGuild')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceSmart'),		Auctioneer.Util.GetLocalizedFilterVal('askprice-smart'),	_AUCT('HelpAskPriceSmart')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceAd'),			Auctioneer.Util.GetLocalizedFilterVal('askprice-ad'),		_AUCT('HelpAskPriceAd')));
 
 	lineFormat = "  |cffffffff/auctioneer askprice %s|r |cff2040ff[%s]|r\n          %s\n\n";
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceTrigger'),	Auctioneer.Command.GetFilterVal('askprice-trigger'),		_AUCT('HelpAskPriceTrigger')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceTrigger'),	Auctioneer.Command.GetFilterVal('askprice-trigger'),		_AUCT('HelpAskPriceTrigger')));
 
 	lineFormat = "  |cffffffff/auctioneer askprice %s %d|r |cff2040ff[%s]|r\n          %s\n\n";
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceWord'), 1,	Auctioneer.Command.GetFilterVal('askprice-word1'),			_AUCT('HelpAskPriceWord')));
-	Auctioneer.Util.ChatPrint(lineFormat:format(_AUCT('CmdAskPriceWord'), 2,	Auctioneer.Command.GetFilterVal('askprice-word2'),			_AUCT('HelpAskPriceWord')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceWord'), 1,	Auctioneer.Command.GetFilterVal('askprice-word1'),			_AUCT('HelpAskPriceWord')));
+	Auctioneer.Util.ChatPrint(string.format(lineFormat, _AUCT('CmdAskPriceWord'), 2,	Auctioneer.Command.GetFilterVal('askprice-word2'),			_AUCT('HelpAskPriceWord')));
 end
 
 --[[
@@ -180,7 +180,7 @@ function setTrigger(param, chatprint)
 	Auctioneer.Command.SetFilter('askprice-trigger', param)
 
 	if (chatprint) then
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtActSet'):format("askprice ".._AUCT('CmdAskPriceTrigger'), param));
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActSet'), "askprice ".._AUCT('CmdAskPriceTrigger'), param));
 		setKhaosSetKeyValue('askprice-trigger', param)
 	end
 end
@@ -201,10 +201,10 @@ function genVarSet(variable, param, chatprint)
 
 	if (chatprint) then
 		if (Auctioneer.Command.GetFilter(var)) then
-			Auctioneer.Util.ChatPrint(_AUCT('FrmtAskPriceEnable'):format(Auctioneer.Util.LocalizeCommand(variable)));
+			Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtAskPriceEnable'), Auctioneer.Util.LocalizeCommand(variable)));
 			setKhaosSetKeyValue(var, true)
 		else
-			Auctioneer.Util.ChatPrint(_AUCT('FrmtAskPriceDisable'):format(Auctioneer.Util.LocalizeCommand(variable)));
+			Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtAskPriceDisable'), Auctioneer.Util.LocalizeCommand(variable)));
 			setKhaosSetKeyValue(var, false)
 		end
 	end
@@ -225,7 +225,7 @@ function setCustomSmartWords(param, number, word, chatprint)
 	number = tonumber(number)
 
 	if (not (((type(param) == 'string') or (type(word) == 'string'))and number)) then
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtUnknownArg'):format(param or word, "askprice ".._AUCT('CmdAskPriceWord')));
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtUnknownArg'), param or word, "askprice ".._AUCT('CmdAskPriceWord')));
 		return
 	end
 
@@ -238,12 +238,12 @@ function setCustomSmartWords(param, number, word, chatprint)
 	elseif (number == 2) then
 		Auctioneer.Command.SetFilter('askprice-word2', word)
 	else
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtUnknownArg'):format(param, "askprice ".._AUCT('CmdAskPriceWord')));
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtUnknownArg'), param, "askprice ".._AUCT('CmdAskPriceWord')));
 		return;
 	end
 
 	if (chatprint) then
-		Auctioneer.Util.ChatPrint(_AUCT('FrmtActSet'):format("askprice ".._AUCT('CmdAskPriceWord').." "..number, Auctioneer.Command.GetFilterVal('askprice-word'..number)));
+		Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtActSet'), "askprice ".._AUCT('CmdAskPriceWord').." "..number, Auctioneer.Command.GetFilterVal('askprice-word'..number)));
 		setKhaosSetKeyValue('askprice-word'..number, word)
 	end
 end
@@ -316,17 +316,17 @@ function eventHandler(self, event, text, player)
 
 		--If the stackSize is grater than one, add the unit price to the message
 		if (item.count > 1) then
-			eachstring = _AUCT('FrmtAskPriceEach'):format(EnhTooltip.GetTextGSC(historicalMedian, nil, true));
+			eachstring = string.format(_AUCT('FrmtAskPriceEach'), EnhTooltip.GetTextGSC(historicalMedian, nil, true));
 		else
 			eachstring = "";
 		end
 
 		if (aCount > 0) then
-			Auctioneer.AskPrice.SendWhisper(item.link..": ".._AUCT('FrmtInfoSeen'):format(aCount), player);
-			Auctioneer.AskPrice.SendWhisper(_AUCT('FrmtAskPriceBuyoutMedianHistorical'):format("    ", EnhTooltip.GetTextGSC(historicalMedian*item.count, nil, true), eachstring), player);
-			Auctioneer.AskPrice.SendWhisper(_AUCT('FrmtAskPriceBuyoutMedianSnapshot'):format("    ", EnhTooltip.GetTextGSC(snapshotMedian*item.count, nil, true), eachstring), player);
+			Auctioneer.AskPrice.SendWhisper(string.format(item.link..": ".._AUCT('FrmtInfoSeen'), aCount), player);
+			Auctioneer.AskPrice.SendWhisper(string.format(_AUCT('FrmtAskPriceBuyoutMedianHistorical'), "    ", EnhTooltip.GetTextGSC(historicalMedian*item.count, nil, true), eachstring), player);
+			Auctioneer.AskPrice.SendWhisper(string.format(_AUCT('FrmtAskPriceBuyoutMedianSnapshot'), "    ", EnhTooltip.GetTextGSC(snapshotMedian*item.count, nil, true), eachstring), player);
 		else
-			Auctioneer.AskPrice.SendWhisper(item.link..": ".._AUCT('FrmtInfoNever'):format(Auctioneer.Util.GetAuctionKey()), player);
+			Auctioneer.AskPrice.SendWhisper(string.format(item.link..": ".._AUCT('FrmtInfoNever'), Auctioneer.Util.GetAuctionKey()), player);
 		end
 
 		--Send out vendor info if we have it
@@ -334,12 +334,12 @@ function eventHandler(self, event, text, player)
 
 			--Again if the stackSize is grater than one, add the unit price to the message
 			if (item.count > 1) then
-				eachstring = _AUCT('FrmtAskPriceEach'):format(EnhTooltip.GetTextGSC(vendorSell, nil, true));
+				eachstring = string.format(_AUCT('FrmtAskPriceEach'), EnhTooltip.GetTextGSC(vendorSell, nil, true));
 			else
 				eachstring = "";
 			end
 
-			Auctioneer.AskPrice.SendWhisper(_AUCT('FrmtAskPriceVendorPrice'):format("    ",EnhTooltip.GetTextGSC(vendorSell * item.count, nil, true), eachstring), player);
+			Auctioneer.AskPrice.SendWhisper(string.format(_AUCT('FrmtAskPriceVendorPrice'), "    ",EnhTooltip.GetTextGSC(vendorSell * item.count, nil, true), eachstring), player);
 		end
 
 		usedStack = usedStack or (item.count > 1)
@@ -350,7 +350,7 @@ function eventHandler(self, event, text, player)
 	if ((not usedStack) and (Auctioneer.Command.GetFilter('askprice-ad'))) then
 		if (not sentAskPriceAd[player]) then --If the player in question has been sent the ad message in this session, don't spam them again.
 			sentAskPriceAd[player] = true
-			Auctioneer.AskPrice.SendWhisper(_AUCT('AskPriceAd'):format(Auctioneer.Command.GetFilterVal('askprice-trigger')), player)
+			Auctioneer.AskPrice.SendWhisper(string.format(_AUCT('AskPriceAd'), Auctioneer.Command.GetFilterVal('askprice-trigger')), player)
 		end
 	end
 end

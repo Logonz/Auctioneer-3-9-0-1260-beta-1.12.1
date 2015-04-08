@@ -526,9 +526,9 @@ function doLow(link)
 		for pos,itemKey in pairs(items) do
 			local auction = getAuctionWithLowestBuyout(itemKey, ahKey);
 			if (not auction) then
-				Auctioneer.Util.ChatPrint(_AUCT('FrmtNoauct'):format(itemLinks[pos]));
+				Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtNoauct'), itemLinks[pos]));
 			else
-				Auctioneer.Util.ChatPrint(_AUCT('FrmtLowLine'):format(Auctioneer.Util.ColorTextWhite(count.."x")..itemLinks[pos], EnhTooltip.GetTextGSC(auction.buyoutPrice), Auctioneer.Util.ColorTextWhite(auction.owner), EnhTooltip.GetTextGSC(auction.buyout / auction.count), Auctioneer.Util.ColorTextWhite(percentLessThan(getUsableMedian(itemKey), auction.buyout / auction.count).."%")));
+				Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtLowLine'), Auctioneer.Util.ColorTextWhite(count.."x")..itemLinks[pos], EnhTooltip.GetTextGSC(auction.buyoutPrice), Auctioneer.Util.ColorTextWhite(auction.owner), EnhTooltip.GetTextGSC(auction.buyout / auction.count), Auctioneer.Util.ColorTextWhite(percentLessThan(getUsableMedian(itemKey), auction.buyout / auction.count).."%")));
 			end
 		end
 	end
@@ -544,10 +544,10 @@ function doMedian(link)
 		for pos,itemKey in pairs(items) do
 			local median, count = getUsableMedian(itemKey);
 			if (not median) then
-				Auctioneer.Util.ChatPrint(_AUCT('FrmtMedianNoauct'):format(Auctioneer.Util.ColorTextWhite(itemName)));
+				Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtMedianNoauct'), Auctioneer.Util.ColorTextWhite(itemName)));
 			else
 				if (not count) then count = 0 end
-				Auctioneer.Util.ChatPrint(_AUCT('FrmtMedianLine'):format(count, Auctioneer.Util.ColorTextWhite(itemName), EnhTooltip.GetTextGSC(median)));
+				Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtMedianLine'), count, Auctioneer.Util.ColorTextWhite(itemName), EnhTooltip.GetTextGSC(median)));
 			end
 		end
 	end
@@ -562,7 +562,7 @@ function doHSP(link)
 	if (items) then
 		for pos,itemKey in pairs(items) do
 			local highestSellablePrice = getHSP(itemKey, Auctioneer.Util.GetAuctionKey());
-			Auctioneer.Util.ChatPrint(_AUCT('FrmtHspLine'):format(itemLinks[pos], EnhTooltip.GetTextGSC(Auctioneer.Util.NilSafeString(highestSellablePrice))));
+			Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtHspLine'), itemLinks[pos], EnhTooltip.GetTextGSC(Auctioneer.Util.NilSafeString(highestSellablePrice))));
 		end
 	end
 end
@@ -708,7 +708,7 @@ function determinePrice(itemKey, ahKey, auctionWithLowestBuyout, lowestAllowedPe
 				if (lowestBuyout <= marketPrice or highestSellablePrice >= lowestBuyout) then
 					-- set highest price to "Discount low"
 					highestSellablePrice = subtractPercent(lowestBuyout, discountLowPercent);
-					warn = _AUCT('FrmtWarnUndercut'):format(discountLowPercent);
+					warn = string.format(_AUCT('FrmtWarnUndercut'), discountLowPercent);
 				end
 			end
 		else -- no low buyout, use discount no competition
@@ -721,7 +721,7 @@ function determinePrice(itemKey, ahKey, auctionWithLowestBuyout, lowestAllowedPe
 			-- set highest price to "Discount low"
 			debugPrint("Discount low case 2");
 			highestSellablePrice = subtractPercent(auctionWithLowestBuyout.buyoutPrice, discountLowPercent);
-			warn = _AUCT('FrmtWarnUndercut'):format(discountLowPercent);
+			warn = string.format(_AUCT('FrmtWarnUndercut'), discountLowPercent);
 		else
 			-- Use vendor price markup.
 			local baseData;
@@ -731,7 +731,7 @@ function determinePrice(itemKey, ahKey, auctionWithLowestBuyout, lowestAllowedPe
 				-- use vendor prices if no auction data available
 				local vendorSell = Auctioneer.Util.NullSafe(baseData.sell); -- use vendor prices
 				highestSellablePrice = addPercent(vendorSell, vendorSellMarkupPercent);
-				warn = _AUCT('FrmtWarnMarkup'):format(vendorSellMarkupPercent);
+				warn = string.format(_AUCT('FrmtWarnMarkup'), vendorSellMarkupPercent);
 			end
 		end
 	end
