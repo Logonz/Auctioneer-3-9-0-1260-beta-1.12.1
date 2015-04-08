@@ -26,7 +26,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 --Local function prototypes
@@ -42,12 +42,12 @@ function register()
 end
 
 -- Convert a single key in a table of configuration settings
-function convertConfig(t, key, values, ...) --Local
+function convertConfig(t, key, values, t) --Local BUG --- replaced ... with t variable ( as it is a table)
 	local modified = false;
 	local v;
 
-	for i = 1, select("#", ...) do
-		local localizedKey = select(i, ...)
+	for i = 1, table.getn(t) do -- switched select # to table.getn
+		local localizedKey = t[i];
 		if (t[localizedKey]) then
 			v = t[localizedKey];
 			t[localizedKey] = nil;

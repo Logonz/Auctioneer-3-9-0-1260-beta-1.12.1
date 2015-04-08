@@ -28,12 +28,12 @@
 	<Button name="PostListItemTemplate" inherits="ListItemTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
-				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 			</OnLoad>
 			<OnClick>
-				local scrollFrame = getglobal(self:GetParent():GetName().."ScrollFrame");
-				local index = self:GetID() + FauxScrollFrame_GetOffset(scrollFrame);
-				AuctionFramePost_ListItem_OnClick(self, index, button);
+				local scrollFrame = getglobal(this:GetParent():GetName().."ScrollFrame");
+				local index = this:GetID() + FauxScrollFrame_GetOffset(scrollFrame);
+				AuctionFramePost_ListItem_OnClick(this, index, button);
 			</OnClick>
 		</Scripts>
 		<HighlightTexture name="$parentHighlight" file="Interface\HelpFrame\HelpFrameButton-Highlight" alphaMode="ADD">
@@ -273,24 +273,24 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
-						self:RegisterForDrag("LeftButton");
+						this:RegisterForDrag("LeftButton");
 					</OnLoad>
 					<OnReceiveDrag>
-						AuctionFramePost_AuctionItem_OnClick(self);
+						AuctionFramePost_AuctionItem_OnClick(this);
 					</OnReceiveDrag>
 					<OnDragStart>
-						AuctionFramePost_AuctionItem_OnClick(self);
+						AuctionFramePost_AuctionItem_OnClick(this);
 					</OnDragStart>
 					<OnClick>
-						AuctionFramePost_AuctionItem_OnClick(self);
+						AuctionFramePost_AuctionItem_OnClick(this);
 					</OnClick>
 					<OnEnter>
-						local parent = self:GetParent()
+						local parent = this:GetParent()
 						local itemKey = parent:GetItemKey();
 						if (itemKey) then
 							local itemLink = Auctioneer.ItemDB.GetItemLink(itemKey);
 							if (itemLink) then
-								GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+								GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
 								GameTooltip:SetHyperlink(Auctioneer.ItemDB.GetItemString(itemKey));
 								GameTooltip:Show();
 								EnhTooltip.TooltipCall(
@@ -320,7 +320,7 @@
 				<Scripts>
 					<OnLoad>
 						UIDropDownMenu_SetWidth(130);
-						getglobal(self:GetName().."Text"):SetJustifyH("LEFT");
+						getglobal(this:GetName().."Text"):SetJustifyH("LEFT");
 					</OnLoad>
 				</Scripts>
 			</Frame>
@@ -351,7 +351,7 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						MoneyInputFrame_SetOnvalueChangedFunc(self, AuctionFramePost_StartPrice_OnChanged);
+						MoneyInputFrame_SetOnvalueChangedFunc(this, AuctionFramePost_StartPrice_OnChanged);
 					</OnLoad>
 				</Scripts>
 			</Frame>
@@ -365,7 +365,7 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						MoneyInputFrame_SetOnvalueChangedFunc(self, AuctionFramePost_BuyoutPrice_OnChanged);
+						MoneyInputFrame_SetOnvalueChangedFunc(this, AuctionFramePost_BuyoutPrice_OnChanged);
 					</OnLoad>
 				</Scripts>
 			</Frame>
@@ -382,20 +382,20 @@
 				</Anchors>
 				<Scripts>
 					<OnTextChanged>
-						AuctionFramePost_StackSize_OnTextChanged(self);
+						AuctionFramePost_StackSize_OnTextChanged(this);
 					</OnTextChanged>
 					<OnTabPressed>
 						if (IsShiftKeyDown()) then
-							getglobal(self:GetParent():GetName().."BuyoutPriceCopper"):SetFocus();
+							getglobal(this:GetParent():GetName().."BuyoutPriceCopper"):SetFocus();
 						else
-							getglobal(self:GetParent():GetName().."StackCount"):SetFocus();
+							getglobal(this:GetParent():GetName().."StackCount"):SetFocus();
 						end
 					</OnTabPressed>
 					<OnEditFocusLost>
-						self:HighlightText(0, 0);
+						this:HighlightText(0, 0);
 					</OnEditFocusLost>
 					<OnEditFocusGained>
-						self:HighlightText();
+						this:HighlightText();
 					</OnEditFocusGained>
 				</Scripts>
 			</EditBox>
@@ -412,20 +412,20 @@
 				</Anchors>
 				<Scripts>
 					<OnTextChanged>
-						AuctionFramePost_StackCount_OnTextChanged(self);
+						AuctionFramePost_StackCount_OnTextChanged(this);
 					</OnTextChanged>
 					<OnTabPressed>
 						if (IsShiftKeyDown()) then
-							getglobal(self:GetParent():GetName().."StackSize"):SetFocus();
+							getglobal(this:GetParent():GetName().."StackSize"):SetFocus();
 						else
-							getglobal(self:GetParent():GetName().."StartPriceGold"):SetFocus();
+							getglobal(this:GetParent():GetName().."StartPriceGold"):SetFocus();
 						end
 					</OnTabPressed>
 					<OnEditFocusLost>
-						self:HighlightText(0, 0);
+						this:HighlightText(0, 0);
 					</OnEditFocusLost>
 					<OnEditFocusGained>
-						self:HighlightText();
+						this:HighlightText();
 					</OnEditFocusGained>
 				</Scripts>
 			</EditBox>
@@ -438,8 +438,8 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>getglobal(self:GetName().."Text"):SetText("2");</OnLoad>
-					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(self, self:GetID())</OnClick>
+					<OnLoad>getglobal(this:GetName().."Text"):SetText("2");</OnLoad>
+					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(this, this:GetID())</OnClick>
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="$parentMediumAuctionRadio" inherits="AuctioneerRadioButtonTemplate" id="2">
@@ -451,8 +451,8 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>getglobal(self:GetName().."Text"):SetText("8");</OnLoad>
-					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(self, self:GetID())</OnClick>
+					<OnLoad>getglobal(this:GetName().."Text"):SetText("8");</OnLoad>
+					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(this, this:GetID())</OnClick>
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="$parentLongAuctionRadio" inherits="AuctioneerRadioButtonTemplate" id="3">
@@ -464,8 +464,8 @@
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>getglobal(self:GetName().."Text"):SetText("24");</OnLoad>
-					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(self, self:GetID())</OnClick>
+					<OnLoad>getglobal(this:GetName().."Text"):SetText("24");</OnLoad>
+					<OnClick>AuctionFramePost_DurationRadioButton_OnClick(this, this:GetID())</OnClick>
 				</Scripts>
 			</CheckButton>
 			<Frame name="$parentDepositMoneyFrame" inherits="SmallMoneyFrameTemplate">
@@ -478,8 +478,8 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.small = 1;
-						self.staticMoney = 0;
+						this.small = 1;
+						this.staticMoney = 0;
 						MoneyFrame_SetType("STATIC");
 					</OnLoad>
 				</Scripts>
@@ -497,10 +497,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetText(_AUCT('UiPostAuctions'));
+						this:SetText(_AUCT('UiPostAuctions'));
 					</OnLoad>
 					<OnClick>
-						AuctionFramePost_CreateAuctionButton_OnClick(self);
+						AuctionFramePost_CreateAuctionButton_OnClick(this);
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -705,17 +705,17 @@
 				</Size>
 				<Scripts>
 					<OnClick>
-						local itemKey = self:GetParent():GetItemKey();
+						local itemKey = this:GetParent():GetItemKey();
 						if (itemKey) then
 							Auctioneer.ScanManager.ScanQuery(Auctioneer.ItemDB.GetItemName(itemKey));
 						end
 					</OnClick>
 					<OnUpdate>
-						local itemKey = self:GetParent():GetItemKey();
+						local itemKey = this:GetParent():GetItemKey();
 						if (itemKey and CanSendAuctionQuery()) then
-							self:Enable();
+							this:Enable();
 						else
-							self:Disable();
+							this:Disable();
 						end
 					</OnUpdate>
 				</Scripts>
@@ -723,21 +723,21 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				getglobal(self:GetName().."Title"):SetText(_AUCT('UiPostAuctions'));
-				getglobal(self:GetName().."TabText"):SetText(_AUCT('UiPost'));
-				getglobal(self:GetName().."PriceModelText"):SetText(_AUCT('UiPriceBasedOnLabel'));
-				getglobal(self:GetName().."SavePriceText"):SetText(_AUCT('UiMakeFixedPriceLabel'));
-				getglobal(self:GetName().."StartPriceText"):SetText(_AUCT('UiStartingPriceLabel'));
-				getglobal(self:GetName().."StartPriceInvalidText"):SetText(_AUCT('UiStartingPriceRequiredError'));
-				getglobal(self:GetName().."BuyoutPriceText"):SetText(_AUCT('UiBuyoutPriceLabel'));
-				getglobal(self:GetName().."BuyoutPriceInvalidText"):SetText(_AUCT('UiBuyoutPriceTooLowError'));
-				getglobal(self:GetName().."QuantityText"):SetText(_AUCT('UiQuantityLabel'));
-				getglobal(self:GetName().."MultiplyText"):SetText("x");
-				getglobal(self:GetName().."StackCountText"):SetText(_AUCT('UiStacksLabel'));
-				getglobal(self:GetName().."DurationText"):SetText(_AUCT('UiDurationLabel'));
-				getglobal(self:GetName().."DepositText"):SetText(_AUCT('UiDepositLabel'));
-				getglobal(self:GetName().."UnknownDepositText"):SetText(_AUCT('UiUnknownError'));
-				getglobal(self:GetName().."ScanButton"):SetText(_AUCT('UiRefresh'));
+				getglobal(this:GetName().."Title"):SetText(_AUCT('UiPostAuctions'));
+				getglobal(this:GetName().."TabText"):SetText(_AUCT('UiPost'));
+				getglobal(this:GetName().."PriceModelText"):SetText(_AUCT('UiPriceBasedOnLabel'));
+				getglobal(this:GetName().."SavePriceText"):SetText(_AUCT('UiMakeFixedPriceLabel'));
+				getglobal(this:GetName().."StartPriceText"):SetText(_AUCT('UiStartingPriceLabel'));
+				getglobal(this:GetName().."StartPriceInvalidText"):SetText(_AUCT('UiStartingPriceRequiredError'));
+				getglobal(this:GetName().."BuyoutPriceText"):SetText(_AUCT('UiBuyoutPriceLabel'));
+				getglobal(this:GetName().."BuyoutPriceInvalidText"):SetText(_AUCT('UiBuyoutPriceTooLowError'));
+				getglobal(this:GetName().."QuantityText"):SetText(_AUCT('UiQuantityLabel'));
+				getglobal(this:GetName().."MultiplyText"):SetText("x");
+				getglobal(this:GetName().."StackCountText"):SetText(_AUCT('UiStacksLabel'));
+				getglobal(this:GetName().."DurationText"):SetText(_AUCT('UiDurationLabel'));
+				getglobal(this:GetName().."DepositText"):SetText(_AUCT('UiDepositLabel'));
+				getglobal(this:GetName().."UnknownDepositText"):SetText(_AUCT('UiUnknownError'));
+				getglobal(this:GetName().."ScanButton"):SetText(_AUCT('UiRefresh'));
 			</OnLoad>
 		</Scripts>
 	</Frame>
@@ -745,7 +745,7 @@
 	<Button name="AuctionFrameTabPost" inherits="AuctionTabTemplate" hidden="true">
 		<Scripts>
 			<OnLoad>
-				self:SetText(_AUCT('UiPostAuctions'));
+				this:SetText(_AUCT('UiPostAuctions'));
 			</OnLoad>
 		</Scripts>
 	</Button>

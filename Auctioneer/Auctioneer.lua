@@ -30,7 +30,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 
@@ -41,6 +41,7 @@ if (Auctioneer.Version == "<".."%version%>") then
 end
 
 local function onLoad()
+
 	-- Unhook some boot triggers if necessary.
 	-- These might not exist on initial loading or if an addon depends on Auctioneer
 	if (Auctioneer_CheckLoad) then

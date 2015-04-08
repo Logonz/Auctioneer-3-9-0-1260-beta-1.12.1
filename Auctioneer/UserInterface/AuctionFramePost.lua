@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -264,7 +264,7 @@ function AuctionFramePost_UpdatePriceModels(frame)
 					function (auction)
 						return (auction.buyoutPrice and auction.buyoutPrice > 0 and auction.owner == UnitName("player"));
 					end);
-				if (#myAuctions > 0) then
+				if (table.getn(myAuctions) > 0) then
 					-- Calculate the lowest bid and buyout for one.
 					local lowestStartBidForOne = 0;
 					local lowestBuyoutForOne = 0;
@@ -444,7 +444,7 @@ end
 -------------------------------------------------------------------------------
 function AuctionFramePost_RemoveAuction(frame, snapshotAuction)
 	local auctions = frame.auctions;
-	for index = 1, #auctions do
+	for index = 1, table.getn(auctions) do
 		local auction = frame.auctions[index];
 		if (auction.auctionId == snapshotAuction.auctionId) then
 			debugPrint("Found auction to remove at index "..index);
@@ -828,7 +828,7 @@ function AuctionFramePost_ValidateAuction(frame)
 		-- Update the price model to reflect bid and buyout prices.
 		local dropdown = getglobal(frame:GetName().."PriceModelDropDown");
 		local index = UIDropDownMenu_GetSelectedID(dropdown);
-		if (index and frame.prices and index <= #frame.prices) then
+		if (index and frame.prices and index <= table.getn(frame.prices)) then
 			-- Check if the current selection matches
 			local currentPrice = frame.prices[index];
 			if ((currentPrice.bid and currentPrice.bid ~= startPrice) or
@@ -915,8 +915,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function AuctionFramePost_StackSize_OnTextChanged(self)
-	local frame = self:GetParent();
+function AuctionFramePost_StackSize_OnTextChanged(this)
+	local frame = this:GetParent();
 
 	-- Update the stack size displayed on the graphic.
 	local itemId = frame:GetItemID();
@@ -936,8 +936,8 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function AuctionFramePost_StackCount_OnTextChanged(self)
-	local frame = self:GetParent();
+function AuctionFramePost_StackCount_OnTextChanged(this)
+	local frame = this:GetParent();
 	frame:UpdateDeposit();
 	return frame:ValidateAuction();
 end
@@ -1056,8 +1056,8 @@ end
 -------------------------------------------------------------------------------
 -- An item in the list is clicked.v
 -------------------------------------------------------------------------------
-function AuctionFramePost_ListItem_OnClick(self, row, button)
-	local frame = self:GetParent():GetParent();
+function AuctionFramePost_ListItem_OnClick(this, row, button)
+	local frame = this:GetParent():GetParent();
 	debugPrint(frame:GetName());
 	if (row and row <= table.getn(frame.auctions)) then --Logon code replaced code #frame.auctions replaced table.getn
 		if (button == "RightButton") then

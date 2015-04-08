@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ end
 -- Gets the number of pending bid requests.
 -------------------------------------------------------------------------------
 function getBidRequestCount()
-	return #BidRequestQueue;
+	return table.getn(BidRequestQueue);
 end
 
 -------------------------------------------------------------------------------
@@ -230,7 +230,7 @@ end
 -- Removes the search request at the head of the queue.
 -------------------------------------------------------------------------------
 function removeRequestFromQueue()
-	if (#BidRequestQueue > 0) then
+	if (table.getn(BidRequestQueue) > 0) then
 		-- Remove the request from the queue.
 		local request = BidRequestQueue[1];
 		table.remove(BidRequestQueue, 1);

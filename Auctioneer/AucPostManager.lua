@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -90,10 +90,10 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function onEventHook(_, event, message, ...)
+function onEventHook(_, event, message)--, ...) Removed last part, seems not to be needed?
 	-- Toss all the pending requests when the AH closes.
 	if (event == "AUCTION_HOUSE_CLOSED") then
-		while (#RequestQueue > 0) do
+		while (table.getn(RequestQueue) > 0) do
 			removeRequestFromQueue();
 		end
 
@@ -110,10 +110,10 @@ function onEventHook(_, event, message, ...)
 		end
 
 	-- Otherwise hand off the event to the current request.
-	elseif (#RequestQueue > 0) then
+	elseif (table.getn(RequestQueue) > 0) then
 		local request = RequestQueue[1];
 		if (request.state ~= READY_STATE) then
-			onEvent(request, event, message, ...);
+			onEvent(request, event, message);--Removed last argument , ...)
 			processRequestQueue();
 		end
 	end
@@ -195,7 +195,7 @@ end
 -- Removes a request at the head of the queue.
 -------------------------------------------------------------------------------
 function removeRequestFromQueue()
-	if (#RequestQueue > 0) then
+	if (table.getn(RequestQueue) > 0) then
 		local request = RequestQueue[1];
 
 		-- Make absolutely sure we are back in the READY_STATE so that we
@@ -217,7 +217,7 @@ function removeRequestFromQueue()
 		table.remove(RequestQueue, 1);
 
 		-- If this was the last request, end processing the queue.
-		if (#RequestQueue == 0) then
+		if (table.getn(RequestQueue) == 0) then
 			endProcessingRequestQueue()
 		end
 	end
@@ -238,7 +238,7 @@ end
 function beginProcessingRequestQueue()
 	if (not ProcessingRequestQueue and
 		AuctionFrame and AuctionFrame:IsVisible() and
-		#RequestQueue > 0) then
+		table.getn(RequestQueue) > 0) then
 
 		ProcessingRequestQueue = true;
 		debugPrint("Begin processing the post queue");
@@ -627,7 +627,7 @@ function addPendingAuction(auction)
 	debugPrint("Added pending auction");
 
 	-- Register for the response events if this is the first pending auction.
-	if (#PendingAuctions == 1) then
+	if (table.getn(PendingAuctions) == 1) then
 		debugPrint("addPendingAuction() - Registering for CHAT_MSG_SYSTEM and UI_ERROR_MESSAGE");
 		Stubby.RegisterEventHook("CHAT_MSG_SYSTEM", "Auctioneer_PostManager", onEventHook);
 		Stubby.RegisterEventHook("UI_ERROR_MESSAGE", "Auctioneer_PostManager", onEventHook);
@@ -638,7 +638,7 @@ end
 -- Removes the pending auction from the queue.
 -------------------------------------------------------------------------------
 function removePendingAuction(result)
-	if (#PendingAuctions > 0) then
+	if (table.getn(PendingAuctions) > 0) then
 		-- Remove the first pending auction.
 		local pendingAuction = PendingAuctions[1];
 		table.remove(PendingAuctions, 1);
@@ -649,7 +649,7 @@ function removePendingAuction(result)
 		end
 
 		-- Unregister for the response events if this is the last pending auction.
-		if (#PendingAuctions == 0) then
+		if (table.getn(PendingAuctions) == 0) then
 			debugPrint("removePendingAuction() - Unregistering for CHAT_MSG_SYSTEM and UI_ERROR_MESSAGE");
 			Stubby.UnregisterEventHook("CHAT_MSG_SYSTEM", "Auctioneer_PostManager");
 			Stubby.UnregisterEventHook("UI_ERROR_MESSAGE", "Auctioneer_PostManager");

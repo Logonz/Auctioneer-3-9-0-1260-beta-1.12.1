@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -39,10 +39,12 @@ local debugPrint;
 -- Shows the auction dropdown menu for the specified auction.
 -------------------------------------------------------------------------------
 function show(auctionId)
-	AuctionDropDownMenu.auctionId = auctionId;
-	UIDropDownMenu_Initialize(AuctionDropDownMenu, initialize, "MENU");
+	DEFAULT_CHAT_FRAME:AddMessage("Wut "..aa);
+	local aa = getglobal("AuctionDropDownMenu"); --Test to fix Dropdown bug
+	aa.auctionId = auctionId;
+	UIDropDownMenu_Initialize(aa, initialize, "MENU");
 	HideDropDownMenu(1);
-	ToggleDropDownMenu(1, nil, AuctionDropDownMenu, "cursor");
+	ToggleDropDownMenu(1, nil, aa, "cursor");
 end
 
 -------------------------------------------------------------------------------

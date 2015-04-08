@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 local classes = {
@@ -410,10 +410,10 @@ end
 
 
 local extGetAuctionItemSubClasses = GetAuctionItemSubClasses
-function GetAuctionItemSubClasses(index, ...)
+function GetAuctionItemSubClasses(index, arg1)
 	if (index == 5) then 
 		return "Trade Goods", "Parts", "Explosives", "Devices", "Gems"; 
 	else
-		return extGetAuctionItemSubClasses(index, ...); 
+		return extGetAuctionItemSubClasses(index, arg1); 
 	end 
 end

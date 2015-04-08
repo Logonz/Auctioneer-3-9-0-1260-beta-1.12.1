@@ -31,14 +31,14 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<Frame name="AuctioneerFrame" parent="UIParent" hidden="false">
 		<Scripts>
 			<OnLoad>
-				Auctioneer.OnLoad(self);
-				self:RegisterEvent("ADDON_LOADED")
+					Auctioneer.OnLoad(this);
+					this:RegisterEvent("ADDON_LOADED");
 			</OnLoad>
 			<OnEvent>
-				if (event == "ADDON_LOADED" and arg1:lower() == "auctioneer") then
+				if (event == "ADDON_LOADED" and arg1 == "Auctioneer") then
 					EnhTooltip.DebugPrint("Auctioneer ADDDON_LOADED Fired!")
 					Auctioneer.Core.AddOnLoaded()
-					self:UnregisterEvent("ADDON_LOADED")
+					this:UnregisterEvent("ADDON_LOADED")
 				end
 			</OnEvent>
 			<OnUpdate>

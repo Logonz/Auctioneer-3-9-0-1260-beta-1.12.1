@@ -26,7 +26,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -325,7 +325,7 @@ function getPercentile(valuesTable, pct)
 		return sortedTable[i1] * (1 - f) + sortedTable[i2] * f
 	end
 
-	local tableSize = #valuesTable or 0
+	local tableSize = table.getn(valuesTable) or 0
 
 	if (tableSize == 0) then
 		return 0, 0; -- if there is an empty table, returns median = 0, count = 0
@@ -491,7 +491,7 @@ function getAuctionWithLowestBuyout(itemKey, ahKey)
 			end);
 
 		-- If we found any auctions, get the lowest buyout price.
-		if (#auctions > 0) then
+		if (table.getn(auctions) > 0) then
 			-- Sort the list of auctions by buyoutPrice.
 			table.sort(
 				auctions,

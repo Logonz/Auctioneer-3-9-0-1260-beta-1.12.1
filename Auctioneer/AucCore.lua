@@ -26,7 +26,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ function addOnLoaded()
 	Stubby.RegisterEventHook("PLAYER_LOGIN", "Auctioneer", Auctioneer.Util.StorePlayerFaction);
 
 	--Ready to rock and roll!
-	Auctioneer.Util.ChatPrint(_AUCT('FrmtWelcome'):format(Auctioneer.Version), 0.8, 0.8, 0.2);
+	Auctioneer.Util.ChatPrint(string.format(_AUCT('FrmtWelcome'), Auctioneer.Version), 0.8, 0.8, 0.2);
 
 	--Inform the user of the constants limit if it has been two loads without a check
 	if (Auctioneer.Command.GetFilterVal("constants-warning") <= 0) then
@@ -216,7 +216,7 @@ function addOnLoaded()
 	end
 
  	-- Cleanup after that massive mem spike.
-	collectgarbage("collect");
+	collectgarbage();
 end
 
 Auctioneer.Core = {

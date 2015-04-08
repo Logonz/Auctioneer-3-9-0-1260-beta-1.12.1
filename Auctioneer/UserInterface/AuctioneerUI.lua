@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -64,8 +64,8 @@ MoneyTypeInfo.AUCTIONEER = {
 -------------------------------------------------------------------------------
 function load()
 	-- Register for functions and methods we need locally.
---	Stubby.RegisterFunctionHook("PickupContainerItem", 200, postPickupContainerItemHook);
-	hooksecurefunc("PickupContainerItem", postPickupContainerItemHook)
+    Stubby.RegisterFunctionHook("PickupContainerItem", 200, postPickupContainerItemHook);
+	--hooksecurefunc("PickupContainerItem", postPickupContainerItemHook)
 
 	-- Blizzard's auction UI may or may not have been loaded yet.
 	if (IsAddOnLoaded("Blizzard_AuctionUI")) then
@@ -79,7 +79,7 @@ end
 -- Called on the ADDON_LOADED event.
 -------------------------------------------------------------------------------
 function onAddonLoaded(hookParams, event, addon)
-	if (addon:lower() == "blizzard_auctionui") then
+	if (string.lower(addon) == "blizzard_auctionui") then
 		onAuctionUILoaded();
 	end
 end
@@ -247,9 +247,9 @@ function relevelFrame(frame)
 	return relevelFrames(frame:GetFrameLevel() + 2, frame:GetChildren())
 end
 
-function relevelFrames(myLevel, ...)
-	for i = 1, select("#", ...) do
-		local child = select(i, ...)
+function relevelFrames(myLevel, t)--... is just a table
+	for i = 1, table.getn(t) do --select("#",...)
+		local child = t[i];--Switched from select(i, ...)
 		child:SetFrameLevel(myLevel)
 		relevelFrame(child)
 	end
@@ -310,6 +310,7 @@ end
 function dropDownMenuInitialize(dropdown, func)
 	-- Hide all the buttons to prevent any calls to Hide() inside
 	-- UIDropDownMenu_Initialize() which will screw up the value of this.
+	debugPrint("LOGON:"..tostring(dropdown).." - "..tostring(func))
 	local button, dropDownList;
 	for i = 1, UIDROPDOWNMENU_MAXLEVELS, 1 do
 		dropDownList = getglobal("DropDownList"..i);

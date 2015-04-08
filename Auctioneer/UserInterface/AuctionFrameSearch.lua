@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 ]]
 
 local TIME_LEFT_NAMES = {
@@ -55,8 +55,8 @@ local debugPrint;
 -------------------------------------------------------------------------------
 function load()
 	debugPrint("Loading");
-	local frame = AuctionFrameSearch;
-
+	local frame = getglobal("AuctionFrameSearch");--Code to get global instead of just raw AuctionFrameSearch
+	debugPrint("LOGON: Got Frame");
 	-- Methods
 	frame.SearchBids = AuctionFrameSearch_SearchBids;
 	frame.SearchBuyouts = AuctionFrameSearch_SearchBuyouts;
@@ -1231,8 +1231,8 @@ end
 -------------------------------------------------------------------------------
 -- An item in the list is clicked.
 -------------------------------------------------------------------------------
-function AuctionFrameSearch_ListItem_OnClick(self, row, button)
-	local frame = self:GetParent():GetParent();
+function AuctionFrameSearch_ListItem_OnClick(this, row, button)
+	local frame = this:GetParent():GetParent();
 
 	-- Select the item clicked.
 	frame:SelectResultByIndex(row);

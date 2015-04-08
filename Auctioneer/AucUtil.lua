@@ -26,7 +26,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 --Local function prototypes
@@ -98,7 +98,7 @@ function getTimeLeftString(timeLeft)
 end
 
 function getSecondsLeftString(secondsLeft)
-	for i = #Auctioneer.Core.Constants.TimeLeft.Seconds, 1, -1 do
+	for i = table.getn(Auctioneer.Core.Constants.TimeLeft.Seconds), 1, -1 do
 		if (secondsLeft >= Auctioneer.Core.Constants.TimeLeft.Seconds[i]) then
 			return getTimeLeftString(i);
 		end
@@ -111,13 +111,13 @@ function checkConstantsLimit() --%TODO%: Localize
 	local numConstants = getNumConstants(AuctionConfig, AuctioneerItemDB, AuctioneerSnapshotDB, AuctioneerHistoryDB, AuctioneerFixedPriceDB)
 
 	if (numConstants >= ((((2^18)-1) / 20) * 17)) then --85% Critical
-		chatPrint(_AUCT("ConstantsCritical"):format((numConstants/((2^18)-1)) * 100), 1, 0, 0)
+		chatPrint(string.format(_AUCT("ConstantsCritical"), (numConstants/((2^18)-1)) * 100), 1, 0, 0)
 
 	elseif (numConstants >= ((((2^18)-1) / 20) * 14)) then --70% Warning
-		chatPrint(_AUCT("ConstantsWarning"):format((numConstants/((2^18)-1)) * 100), 1, 1, 0)
+		chatPrint(string.format(_AUCT("ConstantsWarning"), (numConstants/((2^18)-1)) * 100), 1, 1, 0)
 
 	else
-		chatPrint(_AUCT("ConstantsMessage"):format((numConstants/((2^18)-1)) * 100))
+		chatPrint(string.format(_AUCT("ConstantsMessage"), (numConstants/((2^18)-1)) * 100))
 	end
 
 	return EnhTooltip.DebugPrint(debugprofilestop())
@@ -126,11 +126,17 @@ end
 function getNumConstants(arg1,arg2,arg3,arg4,arg5) --BUG
 	local constantsTable = {}
 	local recursedTables = {}
-	local lastIndex = select("#", ...);
-	local number = lastIndex;
-	for index = 1, lastIndex do
-		getConstants((select(index, ...)), constantsTable, recursedTables);
-	end
+	--All this is not needed, what it does it check the size of the (...) and then itterate over that list, Fix is just to do it manually.
+	--local lastIndex = select("#", ...);
+	local number = 5;--lastIndex;
+	--for index = 1, lastIndex do
+	--	getConstants((select(index, ...)), constantsTable, recursedTables);
+	--end
+	getConstants(arg1, constantsTable, recursedTables);
+	getConstants(arg2, constantsTable, recursedTables);
+	getConstants(arg3, constantsTable, recursedTables);
+	getConstants(arg4, constantsTable, recursedTables);
+	getConstants(arg5, constantsTable, recursedTables);
 	for key in pairs(constantsTable) do
 		number = number + 1;
 	end
@@ -282,7 +288,8 @@ end
 
 -- Returns the current faction's auction signature, depending on location
 function getAuctionKey()
-	local serverName = GetCVar("realmName");
+	name, realm = UnitName("player");-- added to get realm
+	local serverName = GetCVar("realmName") or realm;
 	local currentZone = GetMinimapZoneText();
 	local factionGroup;
 

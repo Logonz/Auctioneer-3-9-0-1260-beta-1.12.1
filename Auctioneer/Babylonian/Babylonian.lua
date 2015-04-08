@@ -24,7 +24,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 ]]
 
 local self = {}
@@ -39,7 +39,10 @@ function setOrder(order)
 	if (not order) then
 		self.order = {}
 	else
-		self.order = { strsplit(",", order) }
+		--self.order = string.match(order, '([^,]+)');
+		--self.order = { strsplit(",", order) }
+		DEFAULT_CHAT_FRAME:AddMessage("Order: "..order);
+		self.order = {}
 	end
 
 	tinsert(self.order, GetLocale())
@@ -60,7 +63,7 @@ end
 
 function getString(stringTable, stringKey, default)
 	local val
-	for i = 1, #self.order do
+	for i = 1, table.getn(self.order) do
 		val = fetchString(stringTable, self.order[i], stringKey)
 		if (val) then
 			return val

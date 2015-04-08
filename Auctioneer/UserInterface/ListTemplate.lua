@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 ]]
 
 local MAX_COLUMNS = 6;
@@ -69,7 +69,7 @@ function ListTemplate_Initialize(frame, physicalColumns, logicalColumns)
 	for physicalColumnIndex = 1, MAX_COLUMNS do
 		local button = getglobal(frame:GetName().."Column"..physicalColumnIndex.."Sort");
 		local dropdown = getglobal(frame:GetName().."Column"..physicalColumnIndex.."DropDown");
-		if (physicalColumnIndex <= #physicalColumns) then
+		if (physicalColumnIndex <= table.getn(physicalColumns)) then
 			local physicalColumn = physicalColumns[physicalColumnIndex];
 			local logicalColumn = physicalColumn.logicalColumn
 			local column = {};
@@ -79,7 +79,7 @@ function ListTemplate_Initialize(frame, physicalColumns, logicalColumns)
 			getglobal(button:GetName().."Arrow"):Hide();
 			button:SetText(logicalColumn.title);
 			button:Show();
-			if (#physicalColumn.logicalColumns > 1) then
+			if (table.getn(physicalColumn.logicalColumns) > 1) then
 				dropdown:Show();
 			else
 				dropdown:Hide();
@@ -198,11 +198,11 @@ function ListTemplateScrollFrame_Update(frame)
 	frame = frame or this;
 	local parent = frame:GetParent();
 	local content = parent.content;
-	FauxScrollFrame_Update(frame, #content, parent.lines, parent.lineHeight);
+	FauxScrollFrame_Update(frame, table.getn(content), parent.lines, parent.lineHeight);
 	for line = 1, parent.lines do
 		local item = getglobal(parent:GetName().."Item"..line);
 		local contentIndex = line + FauxScrollFrame_GetOffset(frame);
-		if contentIndex <= #content then
+		if contentIndex <= table.getn(content) then
 			for columnIndex = 1, MAX_COLUMNS do
 				-- Get the text control (if any)
 				local text = getglobal(parent:GetName().."Item"..line.."Column"..columnIndex);
@@ -217,7 +217,7 @@ function ListTemplateScrollFrame_Update(frame)
 				end
 
 				-- If the column exists, update it
-				if (columnIndex <= #parent.physicalColumns) then
+				if (columnIndex <= table.getn(parent.physicalColumns)) then
 					local physicalColumn = parent.physicalColumns[columnIndex];
 					local logicalColumn = physicalColumn.logicalColumn;
 					local value = logicalColumn.valueFunc(content[contentIndex]);
@@ -277,10 +277,10 @@ end
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-function ListTemplate_DropDown_OnLoad(self)
-	getglobal(self:GetName().."Text"):Hide();
-	self.initialize = ListTemplate_DropDown_Initialize;
-	UIDropDownMenu_SetSelectedID(self, 1);
+function ListTemplate_DropDown_OnLoad(this)
+	getglobal(this:GetName().."Text"):Hide();
+	this.initialize = ListTemplate_DropDown_Initialize;
+	UIDropDownMenu_SetSelectedID(this, 1);
 end
 
 -------------------------------------------------------------------------------

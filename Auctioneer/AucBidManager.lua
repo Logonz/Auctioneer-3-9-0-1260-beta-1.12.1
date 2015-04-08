@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -180,7 +180,7 @@ function placeAuctionBid(listType, index, bid, callbackFunc)
 			action = BID:lower()
 		end
 
-		StaticPopupDialogs.AUCTIONEER_BIDORBUYOUT_AUCTION.text = _AUCT("ConfirmBidBuyout"):format(action, count, itemLink)
+		StaticPopupDialogs.AUCTIONEER_BIDORBUYOUT_AUCTION.text = string.format(_AUCT("ConfirmBidBuyout"), action, count, itemLink)
 		StaticPopup_Show("AUCTIONEER_BIDORBUYOUT_AUCTION");
 	else
 		debugPrint("placeAuctionBid() - Bid not allowed");
@@ -237,7 +237,7 @@ end
 -- Returns true if a bid request is in flight to the server
 -------------------------------------------------------------------------------
 function isBidInProgress()
-	return (#PendingBids > 0);
+	return (table.getn(PendingBids) > 0);
 end
 
 -------------------------------------------------------------------------------
@@ -271,7 +271,7 @@ function addPendingBid(listType, index, bid, callbackFunc)
 		debugPrint("Added pending bid");
 
 		-- Register for the response events if this is the first pending bid.
-		if (#PendingBids == 1) then
+		if (table.getn(PendingBids) == 1) then
 			debugPrint("addPendingBid() - Registering for CHAT_MSG_SYSTEM and UI_ERROR_MESSAGE");
 			Stubby.RegisterEventHook("CHAT_MSG_SYSTEM", "Auctioneer_BidManager", onEventHook);
 			Stubby.RegisterEventHook("UI_ERROR_MESSAGE", "Auctioneer_BidManager", onEventHook);
@@ -286,14 +286,14 @@ end
 -- Removes the pending bid from the queue.
 -------------------------------------------------------------------------------
 function removePendingBid(result)
-	if (#PendingBids > 0) then
+	if (table.getn(PendingBids) > 0) then
 		-- Remove the first pending bid.
 		local pendingBid = PendingBids[1];
 		table.remove(PendingBids, 1);
 		debugPrint("Removed pending bid with result "..result);
 
 		-- Unregister for the response events if this is the last pending bid.
-		if (#PendingBids == 0) then
+		if (table.getn(PendingBids) == 0) then
 			debugPrint("removePendingBid() - Unregistering for CHAT_MSG_SYSTEM and UI_ERROR_MESSAGE");
 			Stubby.UnregisterEventHook("CHAT_MSG_SYSTEM", "Auctioneer_BidManager");
 			Stubby.UnregisterEventHook("UI_ERROR_MESSAGE", "Auctioneer_BidManager");

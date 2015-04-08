@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 ]]
 
 -------------------------------------------------------------------------------
@@ -702,7 +702,7 @@ end
 -- Reconciles auctions in an update against auctions in the snapshot.
 -------------------------------------------------------------------------------
 function reconcileAuctionsForSignature(ah, auctionSignature, auctionsInUpdate, auctionsInSnapshot, partial)
-	debugPrint("Reconcling auctions: "..auctionSignature.." ("table.getn(auctionsInUpdate).." in update;"..table.getn(auctionsInSnapshot).." in snapshot"; -- Logon code replaced # with table.getn
+	debugPrint("Reconcling auctions: "..auctionSignature.." ("..table.getn(auctionsInUpdate).." in update;"..table.getn(auctionsInSnapshot).." in snapshot"); -- Logon code replaced # with table.getn
 
 	-- Sort the auctions in the update by time left and bid amount.
 	table.sort(
@@ -767,7 +767,7 @@ function reconcileAuction(ah, auctionInUpdate, auctionsInSnapshot)
 			local minTimeLeft = getTimeLeft(TimeLeftInSeconds[auctionInSnapshot.timeLeft - 1] - timeElapsed);
 			local timeUntilExpiration = auctionInSnapshot.expiration - auctionInSnapshot.lastSeen;
 			local maxTimeLeft = getTimeLeft(timeUntilExpiration - timeElapsed + (300 * maxBids));
-			debugPrint("timeUntilExpiration "..timeUntilExpiration.." timeElapsed ".timeElapsed.." minTimeLeft "..minTimeLeft.." timeLeft "..auctionInUpdate.timeLeft.." maxTimeLeft "..maxTimeLeft);
+			debugPrint("timeUntilExpiration "..timeUntilExpiration.." timeElapsed "..timeElapsed.." minTimeLeft "..minTimeLeft.." timeLeft "..auctionInUpdate.timeLeft.." maxTimeLeft "..maxTimeLeft);
 
 			-- Check if we have a possible match based on time left.
 			if (minTimeLeft <= auctionInUpdate.timeLeft and auctionInUpdate.timeLeft <= maxTimeLeft) then
@@ -1026,7 +1026,7 @@ end
 function removeSubsetUpdates(ah, query)
 	-- Remove the old updates that are a subset of the new update.
 	local update = createUpdateFromQuery(query);
-	for index = #ah.updates, 1, -1 do
+	for index = table.getn(ah.updates), 1, -1 do
 		local updateAtIndex = unpackUpdate(ah.updates[index]);
 		if (updateAtIndex.date + (24 * 60 * 60) < time()) then
 			debugPrint("Removed update at index "..index.."(age)");
@@ -1048,7 +1048,7 @@ function getLastUpdate(ahKey, query)
 
 	-- Look for the last update for which the query is a subset.
 	local update = createUpdateFromQuery(query);
-	for index = #ah.updates, 1, -1 do
+	for index = table.getn(ah.updates), 1, -1 do
 		local updateAtIndex = unpackUpdate(ah.updates[index]);
 		if (isUpdateSubsetOfUpdate(update, updateAtIndex)) then
 			return updateAtIndex.date;

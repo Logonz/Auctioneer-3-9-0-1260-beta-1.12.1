@@ -37,9 +37,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 			</OnClick>
 			<OnUpdate>
 				if (CanSendAuctionQuery()) then
-					self:Enable();
+					this:Enable();
 				else
-					self:Disable();
+					this:Disable();
 				end
 			</OnUpdate>
 		</Scripts>
@@ -64,9 +64,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 			</OnClick>
 			<OnUpdate>
 				if (CanSendAuctionQuery() and AuctionFrameBrowse.page) then
-					self:Enable();
+					this:Enable();
 				else
-					self:Disable();
+					this:Disable();
 				end
 			</OnUpdate>
 		</Scripts>
@@ -94,7 +94,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 		<Scripts>
 			<OnClick>
 				if (this.filterVal) then
-					if (self:GetChecked()) then
+					if (this:GetChecked()) then
 						Auctioneer.Command.SetFilter(this.filterVal, "on");
 					else
 						Auctioneer.Command.SetFilter(this.filterVal, "off");

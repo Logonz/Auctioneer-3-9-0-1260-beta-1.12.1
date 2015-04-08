@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -438,7 +438,7 @@ end
 -- Removes the request at the head of the queue.
 -------------------------------------------------------------------------------
 function removeRequestFromQueue(result)
-	if (#QueryRequestQueue > 0) then
+	if (table.getn(QueryRequestQueue) > 0) then
 		-- Remove the request from the queue.
 		local request = QueryRequestQueue[1];
 		table.remove(QueryRequestQueue, 1);
@@ -598,7 +598,7 @@ end
 -- Checks if we are awaiting the results of a query.
 -------------------------------------------------------------------------------
 function isQueryInProgress()
-	return (#QueryRequestQueue > 0 and QueryRequestQueue[1].querySent);
+	return (table.getn(QueryRequestQueue) > 0 and QueryRequestQueue[1].querySent);
 end
 
 -------------------------------------------------------------------------------
@@ -607,7 +607,7 @@ end
 -- the auction list to update as a result of a bid.
 -------------------------------------------------------------------------------
 function isBidInProgress()
-	return (#PendingBidInfo > 0);
+	return (table.getn(PendingBidInfo) > 0);
 end
 
 -------------------------------------------------------------------------------
@@ -661,7 +661,7 @@ function reconcileAuctionLists(oldList, newList)
 	-- auctions that are removed because of buyouts.
 	local oldIndex = 1;
 	local newIndex = 1;
-	while (oldIndex < #oldList and newIndex < #newList) do
+	while (oldIndex < table.getn(oldList) and newIndex < table.getn(newList)) do
 		local oldAuction = oldList[oldIndex];
 		local oldSignature = Auctioneer.SnapshotDB.CreateAuctionSignatureFromAuction(oldAuction);
 		local newAuction = newList[newIndex];
@@ -695,7 +695,7 @@ function reconcileAuctionLists(oldList, newList)
 	end
 
 	-- Check if we matched up all the auctions in both lists.
-	if (oldIndex ~= #oldList and newIndex ~= #newList) then
+	if (oldIndex ~= table.getn(oldList) and newIndex ~= table.getn(newList)) then
 		return false;
 	end
 
@@ -703,7 +703,7 @@ function reconcileAuctionLists(oldList, newList)
 	-- snapshot.
 	local oldIndex = 1;
 	local newIndex = 1;
-	while (oldIndex < #oldList and newIndex < #newList) do
+	while (oldIndex < table.getn(oldList) and newIndex < table.getn(newList)) do
 		-- Get the auctions and their signatures.
 		local oldAuction = oldList[oldIndex];
 		local oldSignature = Auctioneer.SnapshotDB.CreateAuctionSignatureFromAuction(oldAuction);

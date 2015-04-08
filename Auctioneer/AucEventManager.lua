@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ function unregisterEvent(eventName, callbackFunc)
 		for index, thisCallbackFunc in ipairs(listeners) do
 			if (thisCallbackFunc == callbackFunc) then
 				table.remove(listeners, index);
-				if (#listeners == 0) then
+				if (table.getn(listeners) == 0) then
 					EventListeners[eventName] = nil;
 				end
 				return;
@@ -74,12 +74,12 @@ end
 -------------------------------------------------------------------------------
 -- Unregisters for an auctioneer event.
 -------------------------------------------------------------------------------
-function fireEvent(eventName, ...)
+function fireEvent(eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10) --Test is to apply the regular Event args
 	local listeners = getListeners(eventName);
 	if (listeners) then
 		--debugPrint("Begin firing event:", eventName);
 		for index, callbackFunc in ipairs(listeners) do
-			callbackFunc(eventName, ...);
+			callbackFunc(eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10); --Test is to apply the regular Event args
 		end
 		--debugPrint("End firing event:", eventName);
 	end

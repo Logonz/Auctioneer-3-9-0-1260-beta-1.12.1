@@ -25,7 +25,7 @@
 		World of Warcraft's interpreted AddOn system.
 		You have an implicit licence to use this AddOn with these facilities
 		since that is it's designated purpose as per:
-		http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
+		http://www.fsf.org/licensing/licenses/gpl-faq.html
 --]]
 
 -------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ function scan()
 	end
 
 	-- Scan everything or only selected categories?
-	if (#allCategories == #categories) then
+	if (table.getn(allCategories) == table.getn(categories)) then
 		debugPrint("Scanning all categories");
 		return scanAll();
 	else
@@ -148,7 +148,7 @@ end
 -- Starts an AH scan of all auctions.
 -------------------------------------------------------------------------------
 function scanAll()
-	if (#RequestQueue == 0) then
+	if (table.getn(RequestQueue) == 0) then
 		-- Construct a scan all request.
 		local request = {};
 		request.description = _AUCT('TextAuction');
@@ -164,7 +164,7 @@ end
 -- Starts an AH scan of the specified categories.
 -------------------------------------------------------------------------------
 function scanCategories(categories)
-	if (#RequestQueue == 0) then
+	if (table.getn(RequestQueue) == 0) then
 		-- Construct a scan request for each category requested.
 		for index, category in pairs(categories) do
 			local request = {};
@@ -183,7 +183,7 @@ end
 -- Starts an AH scan base on a query.
 -------------------------------------------------------------------------------
 function scanQuery(name, minLevel, maxLevel, invTypeIndex, classIndex, subclassIndex, page, isUsable, qualityIndex)
-	if (#RequestQueue == 0) then
+	if (table.getn(RequestQueue) == 0) then
 		-- Construct the scan request.
 		local request = {
 			description = _AUCT('TextAuction');
@@ -211,7 +211,7 @@ end
 function cancelScan()
 	-- %todo: We should probaby wait for the result of any query that is in
 	-- progress.
-	while (#RequestQueue > 0) do
+	while (table.getn(RequestQueue) > 0) do
 		RequestQueue[1].state = RequestState.Canceled;
 		removeRequestFromQueue();
 	end
@@ -234,7 +234,7 @@ end
 -- Removes the request at the head of the queue.
 -------------------------------------------------------------------------------
 function removeRequestFromQueue()
-	if (#RequestQueue > 0) then
+	if (table.getn(RequestQueue) > 0) then
 		-- Remove the request from the queue.
 		local request = RequestQueue[1];
 		table.remove(RequestQueue, 1);
@@ -254,7 +254,7 @@ end
 function sendQuery(request)
 	-- If this is the first query of the request, update the UI to say so.
 	if (request.totalAuctions == 0) then
-		BrowseNoResultsText:SetText(_AUCT('AuctionScanStart'):format(request.description));
+		BrowseNoResultsText:SetText(string.format(_AUCT('AuctionScanStart'), request.description));
 	end
 
 	-- Send the query!
@@ -459,7 +459,7 @@ end
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 function updateScanProgressUI()
-	if (#RequestQueue > 0) then
+	if (table.getn(RequestQueue) > 0) then
 		local request = RequestQueue[1];
 
 		-- Check if we've completed a page yet...
